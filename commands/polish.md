@@ -3,7 +3,7 @@ description: Apply an interface-polish pass to a component (web or React Native)
 argument-hint: <path>
 ---
 
-Apply an interface-polish pass to `$ARGUMENTS` using the `ui` skills (`typography`, `surfaces`, `motion`, `interactions`). Detect whether the file is web (React/CSS/Tailwind) or React Native and apply the platform-correct variant of each rule.
+Apply an interface-polish pass to `$ARGUMENTS` using the UI-polish skills — `ui-typography`, `ui-surfaces`, `ui-motion`, and `ui-interactions`. Detect whether the file is web (React/CSS/Tailwind) or React Native and apply the platform-correct variant of each rule.
 
 Check and fix:
 - **Surfaces** — concentric border radius (`outer = inner + padding`), optical alignment, shadows/elevation over hard borders, image outlines, minimum 44×44 hit area (`hitSlop` on mobile).

@@ -1,6 +1,6 @@
 ---
 name: tailwind
-description: Tailwind CSS rules — utility-first approach, class ordering, responsive design, dark mode, theme extension, and component patterns with cn(). Use when styling web components.
+description: Tailwind CSS rules — utility-first approach, class ordering, responsive design, dark mode, theme extension, and component patterns with cn(). Use when styling web components. Triggers on: Tailwind, utility classes, class ordering, responsive, dark mode, theme extend, cn().
 ---
 
 # Styling (Tailwind CSS)

@@ -1,6 +1,6 @@
 ---
 name: component-architecture
-description: Defines component structure, prop typing, responsibility separation, and ref handling patterns. Use when creating or refactoring React components.
+description: Defines component structure, prop typing, responsibility separation, and ref handling patterns. Use when creating or refactoring React components. Triggers on: component structure, FC, prop type, forwardRef, ref handling, split component, responsibility separation.
 ---
 
 # Component Architecture

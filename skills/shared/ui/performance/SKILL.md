@@ -1,6 +1,6 @@
 ---
 name: performance
-description: Enforces rendering performance best practices — memoization, stable references, and avoiding unnecessary re-renders. Use when optimizing component performance.
+description: Enforces rendering performance best practices — memoization, stable references, and avoiding unnecessary re-renders. Use when optimizing component performance. Triggers on: re-render, useMemo, useCallback, memoization, stable reference, inline arrow in JSX, inline object prop.
 ---
 
 # Performance Discipline
