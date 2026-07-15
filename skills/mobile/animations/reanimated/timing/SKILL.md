@@ -1,6 +1,7 @@
 ---
 name: reanimated-timing
-description: Reanimated timing — withTiming vs withSpring vs withDecay, Easing, spring configs, withSequence/withDelay/withRepeat, cancelAnimation, reduced motion, recommended constant configs. Triggers on: withSpring, withTiming, easing, damping stiffness, withRepeat, reduced motion.
+description: >-
+  Reanimated timing — withTiming vs withSpring vs withDecay, Easing, spring configs, withSequence/withDelay/withRepeat, cancelAnimation, reduced motion, recommended constant configs. Triggers on: withSpring, withTiming, easing, damping stiffness, withRepeat, reduced motion.
 ---
 
 # Timing, Springs & Easing

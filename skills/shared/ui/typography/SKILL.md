@@ -1,6 +1,7 @@
 ---
 name: ui-typography
-description: Cross-platform (React web + React Native) typography polish — text-wrap balance/pretty, font smoothing, tabular numbers, Dynamic Type, adjustsFontSizeToFit, letter spacing, layout-shift avoidance. Triggers on: text wrapping, tabular numbers, font smoothing, Dynamic Type, adjustsFontSizeToFit, orphan.
+description: >-
+  Cross-platform (React web + React Native) typography polish — text-wrap balance/pretty, font smoothing, tabular numbers, Dynamic Type, adjustsFontSizeToFit, letter spacing, layout-shift avoidance. Triggers on: text wrapping, tabular numbers, font smoothing, Dynamic Type, adjustsFontSizeToFit, orphan.
 ---
 
 # Typography

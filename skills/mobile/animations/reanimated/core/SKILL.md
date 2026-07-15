@@ -1,6 +1,7 @@
 ---
 name: reanimated-core
-description: Reanimated core — useSharedValue, useAnimatedStyle, useDerivedValue, useAnimatedReaction, useAnimatedProps, worklet rules, UI vs JS thread, runOnUI/runOnJS, and the .value-only-in-worklets rule. Triggers on: shared value, useAnimatedStyle, worklet, runOnJS, UI thread, .value in render.
+description: >-
+  Reanimated core — useSharedValue, useAnimatedStyle, useDerivedValue, useAnimatedReaction, useAnimatedProps, worklet rules, UI vs JS thread, runOnUI/runOnJS, and the .value-only-in-worklets rule. Triggers on: shared value, useAnimatedStyle, worklet, runOnJS, UI thread, .value in render.
 ---
 
 # Core Hooks & the Worklet Model

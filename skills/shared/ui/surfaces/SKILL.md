@@ -1,6 +1,7 @@
 ---
 name: ui-surfaces
-description: Cross-platform surfaces polish — concentric border radius, optical alignment, shadows vs. elevation, image outlines, minimum hit areas. Triggers on: concentric radius, optical alignment, box-shadow, elevation, image outline, hitSlop, hit area.
+description: >-
+  Cross-platform surfaces polish — concentric border radius, optical alignment, shadows vs. elevation, image outlines, minimum hit areas. Triggers on: concentric radius, optical alignment, box-shadow, elevation, image outline, hitSlop, hit area.
 ---
 
 # Surfaces

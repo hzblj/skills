@@ -1,6 +1,7 @@
 ---
 name: gsap-react
-description: GSAP with React/Next.js — the useGSAP hook, scope, contextSafe, automatic cleanup, plugin registration, never animating React state, SSR. Use when wiring GSAP into React. Triggers on: useGSAP, gsap.context, cleanup, contextSafe, registerPlugin, next.js use client.
+description: >-
+  GSAP with React/Next.js — the useGSAP hook, scope, contextSafe, automatic cleanup, plugin registration, never animating React state, SSR. Use when wiring GSAP into React. Triggers on: useGSAP, gsap.context, cleanup, contextSafe, registerPlugin, next.js use client.
 ---
 
 # React Integration (useGSAP)

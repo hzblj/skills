@@ -1,6 +1,7 @@
 ---
 name: meaningful-names
-description: Clean-code naming — intention-revealing, honest, distinct, pronounceable, searchable names with no type encoding. Use when naming or reviewing variables, functions, types, and components. Triggers on: naming, rename, meaningful names, magic number, Hungarian notation, unclear name.
+description: >-
+  Clean-code naming — intention-revealing, honest, distinct, pronounceable, searchable names with no type encoding. Use when naming or reviewing variables, functions, types, and components. Triggers on: naming, rename, meaningful names, magic number, Hungarian notation, unclear name.
 ---
 
 # Meaningful Names

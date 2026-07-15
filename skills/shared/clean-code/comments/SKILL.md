@@ -1,6 +1,7 @@
 ---
 name: comments
-description: Clean-code comments — explain why not how, delete redundant and dead comments, prefer self-explaining code. Use when writing or reviewing comments and docs. Triggers on: comment, commented-out code, TODO, TSDoc, why not how, dead code.
+description: >-
+  Clean-code comments — explain why not how, delete redundant and dead comments, prefer self-explaining code. Use when writing or reviewing comments and docs. Triggers on: comment, commented-out code, TODO, TSDoc, why not how, dead code.
 ---
 
 # Comments

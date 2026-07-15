@@ -1,6 +1,7 @@
 ---
 name: reanimated-layout-animations
-description: Reanimated layout animations — entering/exiting presets, custom builders, LinearTransition/CurvedTransition, Keyframe, LayoutAnimationConfig, itemLayoutAnimation. The first choice for enter/exit. Triggers on: entering, exiting, FadeIn, layout animation, LinearTransition, list item animation.
+description: >-
+  Reanimated layout animations — entering/exiting presets, custom builders, LinearTransition/CurvedTransition, Keyframe, LayoutAnimationConfig, itemLayoutAnimation. The first choice for enter/exit. Triggers on: entering, exiting, FadeIn, layout animation, LinearTransition, list item animation.
 ---
 
 # Layout Animations

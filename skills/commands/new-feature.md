@@ -12,4 +12,4 @@ Then create:
 - `index.ts` re-exporting only the public API.
 - The allowed internal subfolders as needed: `components`, `hooks`, `consts` — each feature/component in its own folder with a name-matched main file and its own `index.ts` re-export.
 
-Follow the standards: **named exports only**, **`const` arrow functions**, **`type` over `interface`**. Respect dependency direction — a feature may depend on `core-*` packages, **never** on another feature's internals or on `platform-*`. Wire the new package into the workspace and confirm it builds/typechecks.
+Follow the standards: **named exports only**, **`const` arrow functions**, **`type` over `interface`**. Respect dependency direction — a feature may depend on `core-*` and `platform-*` packages, **never** on another feature's internals or on an app. Wire the new package into the workspace and confirm it builds/typechecks.

@@ -1,6 +1,7 @@
 ---
 name: error-handling
-description: Clean-code error handling — exceptions over error codes, wrap third-party APIs at a boundary, don't use catch as an if. Use when designing failure paths and error boundaries. Triggers on: error handling, exceptions, try catch, error codes, wrap library, throw.
+description: >-
+  Clean-code error handling — exceptions over error codes, wrap third-party APIs at a boundary, don't use catch as an if. Use when designing failure paths and error boundaries. Triggers on: error handling, exceptions, try catch, error codes, wrap library, throw.
 ---
 
 # Error Handling

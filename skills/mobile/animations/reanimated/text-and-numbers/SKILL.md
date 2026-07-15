@@ -1,6 +1,7 @@
 ---
 name: reanimated-text-and-numbers
-description: Reanimated animated text and numbers — the useAnimatedProps + TextInput (ReText) pattern, animated counters, per-character staggered reveals, tabular figures, blur/opacity mount reveal. Triggers on: animate number, animated counter, ReText, animate text, typewriter, tabular nums.
+description: >-
+  Reanimated animated text and numbers — the useAnimatedProps + TextInput (ReText) pattern, animated counters, per-character staggered reveals, tabular figures, blur/opacity mount reveal. Triggers on: animate number, animated counter, ReText, animate text, typewriter, tabular nums.
 ---
 
 # Animating Text & Numbers

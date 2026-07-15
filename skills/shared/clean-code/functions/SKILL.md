@@ -1,6 +1,7 @@
 ---
 name: functions
-description: Clean-code functions — small, do one thing, one abstraction level, few arguments, no side effects, command-query separation, plus DRY and refactor discipline. Use when writing or reviewing functions. Triggers on: function too long, do one thing, too many arguments, side effects, command query, DRY, extract function, refactor.
+description: >-
+  Clean-code functions — small, do one thing, one abstraction level, few arguments, no side effects, command-query separation, plus DRY and refactor discipline. Use when writing or reviewing functions. Triggers on: function too long, do one thing, too many arguments, side effects, command query, DRY, extract function, refactor.
 ---
 
 # Functions

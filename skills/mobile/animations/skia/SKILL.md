@@ -1,6 +1,7 @@
 ---
 name: skia
-description: Opinionated rules for @shopify/react-native-skia in Expo + TypeScript — the declarative <Canvas> API (Circle/Rect/Path/Group/Paint/gradients/Blur), driving animation from Reanimated shared values with useDerivedValue and useClock, runtime SkSL shaders, on-canvas text/images, and the GPU-vs-CPU cost of every effect — so custom graphics render on the GPU without faking them with nested Views. Triggers on: Skia, Canvas, shader, SkSL, RuntimeEffect, Path, Paint, gradient, Blur, useClock, useImage, useFont, chart/graph, custom drawing, GPU effect, Picture.
+description: >-
+  Opinionated rules for @shopify/react-native-skia in Expo + TypeScript — the declarative <Canvas> API (Circle/Rect/Path/Group/Paint/gradients/Blur), driving animation from Reanimated shared values with useDerivedValue and useClock, runtime SkSL shaders, on-canvas text/images, and the GPU-vs-CPU cost of every effect — so custom graphics render on the GPU without faking them with nested Views. Triggers on: Skia, Canvas, shader, SkSL, RuntimeEffect, Path, Paint, gradient, Blur, useClock, useImage, useFont, chart/graph, custom drawing, GPU effect, Picture.
 ---
 
 # Graphics & Advanced Rendering (Skia)
