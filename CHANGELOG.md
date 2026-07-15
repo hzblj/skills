@@ -1,5 +1,13 @@
 # skills
 
+## 1.2.0
+
+### Minor Changes
+
+- [#3](https://github.com/hzblj/skills/pull/3) [`ea0a67c`](https://github.com/hzblj/skills/commit/ea0a67c3e422627efb1adc16cec7d7ea35f374cc) Thanks [@hzblj](https://github.com/hzblj)! - Ship through two install channels. Add `.claude-plugin/marketplace.json` (marketplace `hzblj`, plugin `hzblj-skills`) so the repo installs via `/plugin marketplace add hzblj/skills`, and enumerate all 33 skills explicitly in `plugin.json` so both the plugin loader and the [skills.sh](https://skills.sh/hzblj/skills) installer (`npx skills add hzblj/skills`) discover the deeply-nested skills that a default scan misses.
+
+  Move `agents/` and `commands/` to the repo root (the plugin-default locations) so they auto-load — custom `agents`/`commands` path arrays in `plugin.json` are silently ignored by the loader. Rename the plugin from `skills` to `hzblj-skills`. README documents both install paths; CLAUDE.md documents the discovery rules.
+
 ## 1.1.0
 
 ### Minor Changes
