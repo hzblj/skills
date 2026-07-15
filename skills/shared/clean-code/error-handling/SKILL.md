@@ -1,7 +1,7 @@
 ---
 name: error-handling
 description: >-
-  Clean-code error handling — exceptions over error codes, wrap third-party APIs at a boundary, don't use catch as an if. Use when designing failure paths and error boundaries. Triggers on: error handling, exceptions, try catch, error codes, wrap library, throw.
+  Clean-code error handling — exceptions over error codes, wrap third-party APIs at a boundary, don't use catch as an if, don't return or pass null. Use when designing failure paths and error boundaries. Triggers on: error handling, exceptions, try catch, error codes, wrap library, throw, return null, empty array, null checks.
 ---
 
 # Error Handling
@@ -9,8 +9,6 @@ description: >-
 Error handling matters, but it must not take over the code. When the happy path disappears under a hedge of `if (err)` checks, the reader can no longer see what the code is *for*. The goal is to let the main algorithm breathe: keep the logic in one place and the error handling in another, translate other people's failures into your own at the boundary, and never reach for `try/catch` when a plain check would do.
 
 This pairs with [functions](../functions/SKILL.md) (an error handler is a function that does one thing — handling errors) and [objects-and-data](../objects-and-data/SKILL.md) (the wrapper below is an object that hides a library behind a contract). Error and result types follow [type-safety](../../type-safety/SKILL.md).
-
-> Out of scope: returning `null` and the Null Object pattern are intentionally **not** covered by this skill. This file is about exceptions, boundaries, and control flow.
 
 ## Use exceptions, not return/error codes
 
@@ -155,6 +153,57 @@ try {
 }
 ```
 
+## Don't return `null` — throw, or return an empty collection
+
+Every `null` you return is a null-check you force on every caller, forever. Miss one and the app crashes far from the cause (`Cannot read properties of null`). Worse, `null` says nothing about *why*: it smears "not found", "failed to load", and "empty" into one ambiguous value. Reach for one of two honest alternatives instead.
+
+- **When absence is a failure**, throw a domain error (as above) so recovery lives in one place rather than as an inline null-check at every call site.
+- **When absence is normal**, model it explicitly — return an empty collection for lists, or a narrow `T | undefined` the caller is made to narrow.
+
+The most common offender is returning `null` for a list. A `Spell[] | null` return type forces every caller to guard before it can iterate — and the one that forgets crashes on `.map`. Return `[]` instead: an empty array already *means* "nothing to do", and `for` / `.map` / `.filter` all handle it for free.
+
+```ts
+// Bad — null list. Every caller must guard first, and the one that forgets crashes.
+const getEnrolledSpells = (student: Student): Spell[] | null => {
+  const roster = spellRegistry.find(student.id)
+  if (roster === undefined) return null
+  return roster.spells
+}
+
+const listSpells = (student: Student): string => {
+  const spells = getEnrolledSpells(student)
+  if (spells === null) return 'None' // forced guard — forget it and .map throws
+  return spells.map((spell) => spell.name).join(', ')
+}
+```
+
+```ts
+// Good — empty array means "none". Callers iterate unconditionally.
+const getEnrolledSpells = (student: Student): Spell[] =>
+  spellRegistry.find(student.id)?.spells ?? []
+
+const listSpells = (student: Student): string =>
+  getEnrolledSpells(student)
+    .map((spell) => spell.name)
+    .join(', ')
+```
+
+For a single value that legitimately may be absent, don't reach for `null` either — return `T | undefined` and let the caller narrow it (see [type-safety](../../type-safety/SKILL.md)). Where "not found" is genuinely exceptional for the caller, pair the lookup with a `requireX` variant that throws (like `requireVault` above), so the happy path stays flat.
+
+```ts
+// Good — a lookup that may be absent, and a require that must exist.
+const findWizard = (id: string): Wizard | undefined =>
+  wizards.find((wizard) => wizard.id === id)
+
+const requireWizard = (id: string): Wizard => {
+  const wizard = findWizard(id)
+  if (wizard === undefined) throw new WizardNotFoundError(id)
+  return wizard
+}
+```
+
+And don't *pass* `null` either. A function that must defend every parameter against `null` is one whose contract you've already given up on. Keep `null` out of your arguments and you never have to check for it inside.
+
 ## Common Mistakes
 
 | Mistake | Fix |
@@ -168,3 +217,6 @@ try {
 | Empty `catch {}` or silently returning a default | Never swallow — log, translate, or re-throw |
 | Treating the `catch` binding as `Error` / `as`-casting it | It's `unknown`; narrow before use, no casts |
 | Translating an error but dropping the original | Preserve it: `new DomainError(msg, { cause: original })` |
+| Returning `null` for a list, forcing a guard at every call site | Return `[]`; callers `.map`/`.filter`/`for` over it unconditionally |
+| Returning `null` to mean "not found" | Return `T \| undefined` (lookup) or throw (`requireX`) — don't conflate absence with failure |
+| Passing `null` into a function, forcing it to defend every param | Keep `null` out of arguments; don't accept what you'd have to guard |

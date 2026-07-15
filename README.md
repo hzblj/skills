@@ -64,19 +64,6 @@ claude plugin install hzblj-skills@hzblj
 - **[skills.sh](https://skills.sh/hzblj/skills)** copies the skills in so you can edit them — skills only.
 - **The plugin** keeps them as a managed bundle you don't edit, and ships the agents and commands alongside the skills.
 
-### Local development
-
-Working on the skills themselves? Symlink every skill straight into your agent so a
-`git pull` keeps them current:
-
-```bash
-corepack enable && yarn install
-yarn link-skills   # → ~/.claude/skills and ~/.agents/skills
-yarn list-skills   # see everything that's available
-```
-
-Or reference the skills you want directly from a project's `CLAUDE.md`.
-
 ## How I use them
 
 I don't invoke skills by hand much — I describe the task, and the agent reaches for
@@ -224,15 +211,6 @@ Slash commands in [`commands/`](./commands):
 - [`/new-component <Name>`](./commands/new-component.md) — scaffold a component
 - [`/polish <path>`](./commands/polish.md) — interface-polish pass
 - [`/audit-imports`](./commands/audit-imports.md) — audit monorepo boundaries
-
-## Releasing
-
-Changelogs are automated with [Changesets](https://github.com/changesets/changesets):
-
-```bash
-yarn changeset            # describe the change (bump + summary)
-yarn changeset:version    # apply pending changesets → updates CHANGELOG.md
-```
 
 ## License
 
