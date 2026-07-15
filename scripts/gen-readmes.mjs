@@ -31,9 +31,6 @@ const walk = (dir) => {
 
 const countSkills = (dir) => walk(dir).filter(hasSkill).length;
 
-const mdFiles = (dir) =>
-  fs.readdirSync(dir).filter((f) => f.endsWith(".md") && f !== "README.md").sort();
-
 const readFrontmatter = (file) => {
   const txt = fs.readFileSync(file, "utf8");
   const m = txt.match(/^---\s*\n([\s\S]*?)\n---/);
@@ -73,16 +70,6 @@ const gen = (folder) => {
   const name = path.basename(folder);
   const lines = [`# ${title(name)}`, ""];
 
-  if (name === "agents" || name === "commands") {
-    lines.push(`Custom ${name} for this plugin.`, "");
-    for (const base of mdFiles(folder)) {
-      const fm = readFrontmatter(path.join(folder, base));
-      const label = (name === "commands" ? "/" : "") + (fm.name || base.slice(0, -3));
-      lines.push(`- [**${label}**](${base}) — ${short(fm.description)}`);
-    }
-    return lines.join("\n") + "\n";
-  }
-
   const relpath = folder === SKILLS ? "skills" : "skills/" + path.relative(SKILLS, folder);
   const n = countSkills(folder);
   lines.push(`\`${relpath}\` — ${n} skill${n === 1 ? "" : "s"}.`, "");
@@ -91,8 +78,6 @@ const gen = (folder) => {
     if (hasSkill(child)) {
       const fm = readFrontmatter(path.join(child, "SKILL.md"));
       lines.push(`- [**${fm.name || cname}**](${cname}/SKILL.md) — ${short(fm.description)}`);
-    } else if (cname === "agents" || cname === "commands") {
-      lines.push(`- [**${cname}/**](${cname}/) — ${mdFiles(child).length} ${cname}`);
     } else {
       const cn = countSkills(child);
       lines.push(`- [**${cname}/**](${cname}/) — ${cn} skill${cn === 1 ? "" : "s"}`);

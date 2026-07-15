@@ -17,11 +17,47 @@ for the hundredth time is how skills die. Make them your own.
 
 ## Install
 
-This repo ships as a native [Claude Code plugin](https://code.claude.com/docs/en/plugins)
-(see [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json)).
+Two ways to install, two philosophies.
 
-For local development, symlink every skill straight into your agent so a `git pull`
-keeps them current:
+### Quickstart — [skills.sh](https://skills.sh/hzblj/skills)
+
+Copies the skills into your project so you can hack on them and make them your own.
+Works with Claude Code, Codex, Cursor, and any Agent-Skills-compatible harness:
+
+```bash
+npx skills@latest add hzblj/skills
+```
+
+Pick the skills you want and which agents to install them on.
+
+### Claude Code plugin
+
+Prefer a plug-and-play install you don't maintain by hand? These skills also ship as
+a native [Claude Code plugin](https://code.claude.com/docs/en/plugins) — a read-only,
+always-current bundle that updates when I ship a new version. You subscribe rather
+than fork, and you get the [agents](#agents) and [commands](#commands) too.
+
+Inside Claude Code:
+
+```
+/plugin marketplace add hzblj/skills
+/plugin install hzblj-skills@hzblj
+```
+
+Or from your shell:
+
+```bash
+claude plugin marketplace add hzblj/skills
+claude plugin install hzblj-skills@hzblj
+```
+
+- **[skills.sh](https://skills.sh/hzblj/skills)** copies the skills in so you can edit them — skills only.
+- **The plugin** keeps them as a managed bundle you don't edit, and ships the agents and commands alongside the skills.
+
+### Local development
+
+Working on the skills themselves? Symlink every skill straight into your agent so a
+`git pull` keeps them current:
 
 ```bash
 corepack enable && yarn install
@@ -75,19 +111,19 @@ Implement this design from Figma.
 
 **Review my changes before I open the PR.** — `/clean-review`
 
-→ [clean-code-reviewer](./skills/agents/agent-clean-code-reviewer.md) over
+→ [clean-code-reviewer](./agents/agent-clean-code-reviewer.md) over
 [functions](./skills/shared/clean-code/functions/SKILL.md) ·
 [meaningful-names](./skills/shared/clean-code/meaningful-names/SKILL.md) ·
 [error-handling](./skills/shared/clean-code/error-handling/SKILL.md)
 
 **Refactor this file to my standards.** — `/refactor <path>`
 
-→ [code-refactorer](./skills/agents/agent-code-refactorer.md) — `const` arrows,
+→ [code-refactorer](./agents/agent-code-refactorer.md) — `const` arrows,
 named exports, guard clauses, `cn()`, `type` over `interface`
 
 **Scaffold a new feature package.** — `/new-feature <name>`
 
-→ [monorepo-architect](./skills/agents/agent-monorepo-architect.md) +
+→ [monorepo-architect](./agents/agent-monorepo-architect.md) +
 [project](./skills/shared/project/SKILL.md)
 
 ## Skills
@@ -159,25 +195,25 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 
 ## Agents
 
-Custom subagents in [`skills/agents/`](./skills/agents):
+Custom subagents in [`agents/`](./agents):
 
-- [animation-specialist](./skills/agents/agent-animation-specialist.md) — motion across web + mobile (GSAP, Reanimated, Skia, gestures)
-- [clean-code-reviewer](./skills/agents/agent-clean-code-reviewer.md) — read-only review against clean-code + type-safety; Before/After findings
-- [code-refactorer](./skills/agents/agent-code-refactorer.md) — applies the clean-code standards to existing code, preserving behavior
-- [monorepo-architect](./skills/agents/agent-monorepo-architect.md) — scaffolds/enforces the Turborepo monorepo
-- [mobile-developer](./skills/agents/agent-mobile-developer.md) — senior React Native + Expo engineer
-- [web-developer](./skills/agents/agent-web-developer.md) — senior Next.js + React engineer
+- [animation-specialist](./agents/agent-animation-specialist.md) — motion across web + mobile (GSAP, Reanimated, Skia, gestures)
+- [clean-code-reviewer](./agents/agent-clean-code-reviewer.md) — read-only review against clean-code + type-safety; Before/After findings
+- [code-refactorer](./agents/agent-code-refactorer.md) — applies the clean-code standards to existing code, preserving behavior
+- [monorepo-architect](./agents/agent-monorepo-architect.md) — scaffolds/enforces the Turborepo monorepo
+- [mobile-developer](./agents/agent-mobile-developer.md) — senior React Native + Expo engineer
+- [web-developer](./agents/agent-web-developer.md) — senior Next.js + React engineer
 
 ## Commands
 
-Slash commands in [`skills/commands/`](./skills/commands):
+Slash commands in [`commands/`](./commands):
 
-- [`/clean-review`](./skills/commands/clean-review.md) — review the current diff against clean-code + type-safety
-- [`/refactor <path>`](./skills/commands/refactor.md) — refactor a file to the standards
-- [`/new-feature <name>`](./skills/commands/new-feature.md) — scaffold a `feature-*` package
-- [`/new-component <Name>`](./skills/commands/new-component.md) — scaffold a component
-- [`/polish <path>`](./skills/commands/polish.md) — interface-polish pass
-- [`/audit-imports`](./skills/commands/audit-imports.md) — audit monorepo boundaries
+- [`/clean-review`](./commands/clean-review.md) — review the current diff against clean-code + type-safety
+- [`/refactor <path>`](./commands/refactor.md) — refactor a file to the standards
+- [`/new-feature <name>`](./commands/new-feature.md) — scaffold a `feature-*` package
+- [`/new-component <Name>`](./commands/new-component.md) — scaffold a component
+- [`/polish <path>`](./commands/polish.md) — interface-polish pass
+- [`/audit-imports`](./commands/audit-imports.md) — audit monorepo boundaries
 
 ## Releasing
 
