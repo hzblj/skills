@@ -8,7 +8,7 @@
   </a>
 </p>
 
-# Skills For Real React/React Native Engineers
+# Skills
 
 Skills for React/React Native Engineers. Straight from my `.claude` directory.
 
