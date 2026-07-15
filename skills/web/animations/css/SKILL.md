@@ -1,6 +1,7 @@
 ---
 name: css-animations
-description: Pure-CSS web animations best practices — interruptible transitions vs. keyframes, staggered enter, subtle exit, icon cross-fade with no motion library, scale-on-press, transition specificity, will-change, and prefers-reduced-motion. Use for web motion that doesn't need a JS timeline (reach for GSAP when it does). Triggers on: CSS transition, keyframes, animation-delay, stagger, will-change, transition all, reduced motion, scale on press, icon cross-fade, cubic-bezier.
+description: >-
+  Pure-CSS web animations best practices — interruptible transitions vs. keyframes, staggered enter, subtle exit, icon cross-fade with no motion library, scale-on-press, transition specificity, will-change, and prefers-reduced-motion. Use for web motion that doesn't need a JS timeline (reach for GSAP when it does). Triggers on: CSS transition, keyframes, animation-delay, stagger, will-change, transition all, reduced motion, scale on press, icon cross-fade, cubic-bezier.
 ---
 
 # CSS Animations

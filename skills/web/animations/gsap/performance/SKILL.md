@@ -1,6 +1,7 @@
 ---
 name: gsap-performance
-description: GSAP performance — animate transform/opacity only, extract duration/easing constants, will-change, force3D, ScrollTrigger perf, prefers-reduced-motion. Use when optimizing web animations. Triggers on: jank, will-change, transform opacity, reduced motion, gsap performance.
+description: >-
+  GSAP performance — animate transform/opacity only, extract duration/easing constants, will-change, force3D, ScrollTrigger perf, prefers-reduced-motion. Use when optimizing web animations. Triggers on: jank, will-change, transform opacity, reduced motion, gsap performance.
 ---
 
 # Performance

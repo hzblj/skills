@@ -1,6 +1,7 @@
 ---
 name: gsap-timelines
-description: GSAP 3 timelines — sequencing, defaults, labels, relative position, stagger, repeat/yoyo, control methods, nesting. Use when building sequenced web animations. Triggers on: gsap timeline, sequence, stagger, labels, yoyo, timeScale.
+description: >-
+  GSAP 3 timelines — sequencing, defaults, labels, relative position, stagger, repeat/yoyo, control methods, nesting. Use when building sequenced web animations. Triggers on: gsap timeline, sequence, stagger, labels, yoyo, timeScale.
 ---
 
 # Timelines

@@ -17,7 +17,7 @@ description: |
   <commentary>Use for extract-and-clean refactors driven by the functions/formatting skills.</commentary>
   </example>
 tools: Read, Write, Edit, Bash, Glob, Grep
-model: sonnet
+model: opus
 ---
 
 ## Role

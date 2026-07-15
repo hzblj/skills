@@ -17,7 +17,7 @@ description: |
   <commentary>Use when the user wants an assessment, not edits. Pair with code-refactorer to apply the fixes.</commentary>
   </example>
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: opus
 ---
 
 ## Role

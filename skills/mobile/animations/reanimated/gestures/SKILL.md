@@ -1,6 +1,7 @@
 ---
 name: reanimated-gestures
-description: Reanimated + gesture-handler v2 — Gesture.Pan/Tap/Pinch, GestureDetector, driving shared values, withDecay, runOnJS, gesture composition, activeOffset/failOffset. Triggers on: gesture, pan, swipe, drag, GestureDetector, withDecay, pinch.
+description: >-
+  Reanimated + gesture-handler v2 — Gesture.Pan/Tap/Pinch, GestureDetector, driving shared values, withDecay, runOnJS, gesture composition, activeOffset/failOffset. Triggers on: gesture, pan, swipe, drag, GestureDetector, withDecay, pinch.
 ---
 
 # Gestures

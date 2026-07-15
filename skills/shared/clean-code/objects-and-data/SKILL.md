@@ -1,6 +1,7 @@
 ---
 name: objects-and-data
-description: Clean-code objects vs. data structures — Tell Don't Ask, object/data anti-symmetry, Law of Demeter, contract-first design. Use when designing types, classes, and module boundaries. Triggers on: encapsulation, Tell Don't Ask, Law of Demeter, train wreck, DTO vs class, interface first.
+description: >-
+  Clean-code objects vs. data structures — Tell Don't Ask, object/data anti-symmetry, Law of Demeter, contract-first design. Use when designing types, classes, and module boundaries. Triggers on: encapsulation, Tell Don't Ask, Law of Demeter, train wreck, DTO vs class, interface first.
 ---
 
 # Objects & Data Structures

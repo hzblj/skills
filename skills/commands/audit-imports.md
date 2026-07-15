@@ -8,7 +8,7 @@ Audit the workspace (or `$ARGUMENTS` if provided) against the `project` skill's 
 
 Check for:
 - **Deep imports** — any import that reaches past a package entry into its internals (e.g. `@scope/feature-x/src/...`). Imports must target the package name / its public entry only.
-- **Dependency direction** — `platform-* → feature-* → core-*`. Flag any `core-*` importing `feature-*` or `platform-*`, and any `feature-*` importing another feature's internals.
+- **Dependency direction** — `apps/* → feature-* → platform-* → core-*`. Flag any `core-*` importing `platform-*`/`feature-*`/an app, any `platform-*` importing a `feature-*` or app, and any `feature-*` importing another feature's internals or an app.
 - **Circular dependencies** between packages.
 - **Default exports** — the repo uses named exports only.
 

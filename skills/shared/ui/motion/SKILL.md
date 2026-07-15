@@ -1,6 +1,7 @@
 ---
 name: ui-motion
-description: Cross-platform motion polish — interruptible animations, split & stagger enter, subtle exit, contextual icon cross-fade, skip-animation-on-load. Triggers on: stagger, enter animation, exit animation, icon cross-fade, interruptible, initial false.
+description: >-
+  Cross-platform motion polish — interruptible animations, split & stagger enter, subtle exit, contextual icon cross-fade, skip-animation-on-load. Triggers on: stagger, enter animation, exit animation, icon cross-fade, interruptible, initial false.
 ---
 
 # Motion

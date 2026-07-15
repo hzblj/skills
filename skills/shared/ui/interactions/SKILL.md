@@ -1,6 +1,7 @@
 ---
 name: ui-interactions
-description: Cross-platform interaction polish — press/tap feedback (scale 0.96), haptics, hover, focus rings, disabled/loading, minimum hit area, no transition:all, will-change. Triggers on: press feedback, scale on press, haptics, ripple, hover, focus-visible, active state.
+description: >-
+  Cross-platform interaction polish — press/tap feedback (scale 0.96), haptics, hover, focus rings, disabled/loading, minimum hit area, no transition:all, will-change. Triggers on: press feedback, scale on press, haptics, ripple, hover, focus-visible, active state.
 ---
 
 # Interactions

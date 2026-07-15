@@ -62,10 +62,11 @@ All code examples — and any code you write — follow these:
 
 ## Monorepo model (`skills/shared/project`)
 
-Consumers' apps use a Turborepo layout: `packages/core-*` (platform-agnostic
-foundation) → `packages/feature-*` (product features) → `apps/platform-*`
-(`platform-mobile` Expo/RN, `platform-web` Next.js, `platform-backend`).
-Dependency direction is strict: `platform-* → feature-* → core-*`, never the
+Consumers' apps use a Turborepo layout: `packages/` holds `core-*` (platform-
+agnostic foundation), `platform-*` (platform-specific building blocks — native
+modules, RN UI, device APIs), and `feature-*` (product features); `apps/` holds
+the deployables (`mobile` Expo/RN, `web` Next.js, `backend`, `e2e`). Dependency
+direction is strict: `apps/* → feature-* → platform-* → core-*`, never the
 reverse; import only from a package's public entry, never a deep path.
 
 ## Adding things

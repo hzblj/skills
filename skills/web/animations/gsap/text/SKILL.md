@@ -1,6 +1,7 @@
 ---
 name: gsap-text
-description: GSAP SplitText type/text animations — split into chars/words/lines, staggered reveals, line masking, font readiness, revert for a11y, reduced motion. Use for animated text reveals. Triggers on: SplitText, text reveal, type animation, word stagger, line mask.
+description: >-
+  GSAP SplitText type/text animations — split into chars/words/lines, staggered reveals, line masking, font readiness, revert for a11y, reduced motion. Use for animated text reveals. Triggers on: SplitText, text reveal, type animation, word stagger, line mask.
 ---
 
 # Text Animations (SplitText)

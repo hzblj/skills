@@ -1,6 +1,7 @@
 ---
 name: formatting
-description: Clean-code formatting — vertical ordering (stepdown/newspaper), declaring near use, team-enforced tooling. Use when ordering or formatting code. Triggers on: formatting, code order, Prettier, ESLint, vertical spacing, where to declare variables.
+description: >-
+  Clean-code formatting — vertical ordering (stepdown/newspaper), declaring near use, team-enforced tooling. Use when ordering or formatting code. Triggers on: formatting, code order, Prettier, ESLint, vertical spacing, where to declare variables.
 ---
 
 # Formatting

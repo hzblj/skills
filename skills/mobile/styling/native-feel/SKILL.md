@@ -1,6 +1,7 @@
 ---
 name: native-feel
-description: Opinionated rules for making an Expo + TypeScript app feel genuinely native on both platforms — a strict spacing/design-token system, Platform.OS/Platform.select branching, expo-haptics (impact/selection/notification) used with restraint, per-platform Pressable feedback, safe areas and edge-to-edge, keyboard handling, scroll feel, Dynamic Type and accessibility, dark mode, and reduced motion. Triggers on: Platform.select, expo-haptics, impactAsync, selectionAsync, notificationAsync, android_ripple, safe area insets, edge-to-edge, KeyboardAvoidingView, useColorScheme, dark mode, hitSlop, touch target, VoiceOver, TalkBack, reduced motion, spacing tokens.
+description: >-
+  Opinionated rules for making an Expo + TypeScript app feel genuinely native on both platforms — a strict spacing/design-token system, Platform.OS/Platform.select branching, expo-haptics (impact/selection/notification) used with restraint, per-platform Pressable feedback, safe areas and edge-to-edge, keyboard handling, scroll feel, Dynamic Type and accessibility, dark mode, and reduced motion. Triggers on: Platform.select, expo-haptics, impactAsync, selectionAsync, notificationAsync, android_ripple, safe area insets, edge-to-edge, KeyboardAvoidingView, useColorScheme, dark mode, hitSlop, touch target, VoiceOver, TalkBack, reduced motion, spacing tokens.
 ---
 
 # UX & Pixel Precision

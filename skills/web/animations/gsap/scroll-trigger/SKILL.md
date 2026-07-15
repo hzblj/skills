@@ -1,6 +1,7 @@
 ---
 name: gsap-scroll-trigger
-description: GSAP ScrollTrigger — trigger/start/end, scrub, pin, toggleActions, snap, batch, responsive matchMedia, cleanup. Use for scroll-linked web animations. Triggers on: ScrollTrigger, scroll animation, scrub, pin, parallax, markers.
+description: >-
+  GSAP ScrollTrigger — trigger/start/end, scrub, pin, toggleActions, snap, batch, responsive matchMedia, cleanup. Use for scroll-linked web animations. Triggers on: ScrollTrigger, scroll animation, scrub, pin, parallax, markers.
 ---
 
 # ScrollTrigger
