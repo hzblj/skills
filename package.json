@@ -1,0 +1,24 @@
+{
+  "name": "skills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Skills for React/React Native Engineers. Straight from my .claude directory.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hzblj/skills"
+  },
+  "license": "MIT",
+  "author": "Jan Blazej",
+  "scripts": {
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "list-skills": "bash scripts/list-skills.sh",
+    "link-skills": "bash scripts/link-skills.sh",
+    "readmes": "node scripts/gen-readmes.mjs"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.30.0"
+  },
+  "packageManager": "yarn@4.17.1"
+}

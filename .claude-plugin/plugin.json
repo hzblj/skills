@@ -1,0 +1,10 @@
+{
+  "name": "skills",
+  "description": "Skills for React/React Native Engineers. Straight from my .claude directory.",
+  "version": "1.0.0",
+  "author": { "name": "Jan Blazej" },
+  "repository": "https://github.com/hzblj/skills",
+  "license": "MIT",
+  "commands": "./skills/commands",
+  "agents": "./skills/agents"
+}
