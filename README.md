@@ -1,6 +1,10 @@
 <p>
   <a href="https://www.janblazej.dev/">
-    <img alt="AI Skills" src="https://www.janblazej.dev/png/ai-skills.png">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://www.janblazej.dev/png/ai-skills-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="https://www.janblazej.dev/png/ai-skills.png">
+      <img alt="AI Skills" src="https://www.janblazej.dev/png/ai-skills.png">
+    </picture>
   </a>
 </p>
 
