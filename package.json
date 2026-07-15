@@ -14,7 +14,8 @@
     "changeset:version": "changeset version",
     "list-skills": "bash scripts/list-skills.sh",
     "link-skills": "bash scripts/link-skills.sh",
-    "readmes": "node scripts/gen-readmes.mjs"
+    "readmes": "node scripts/gen-readmes.mjs",
+    "openai-yaml": "node scripts/gen-openai-yaml.mjs"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.7.0",

@@ -25,6 +25,7 @@ const hasSkill = (dir) => fs.existsSync(path.join(dir, "SKILL.md"));
 
 const walk = (dir) => {
   const out = [dir];
+  if (hasSkill(dir)) return out; // leaf skill — don't descend into its own files (agents/, etc.)
   for (const child of listDirs(dir)) out.push(...walk(child));
   return out;
 };
