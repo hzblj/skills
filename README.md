@@ -1,3 +1,9 @@
+<p>
+  <a href="https://www.janblazej.dev/">
+    <img alt="AI Skills" src="https://www.janblazej.dev/png/ai-skills.png">
+  </a>
+</p>
+
 # Skills For Real React/React Native Engineers
 
 Skills for React/React Native Engineers. Straight from my `.claude` directory.
