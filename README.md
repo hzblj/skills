@@ -97,8 +97,7 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 
 ### Shared — both platforms
 
-**Clean code** (Harry Potter examples; this is where my code-style rules live —
-`const` arrows, named exports, guard clauses, `cn()`):
+**Clean code** — the standards I enforce for readable, maintainable code, with Harry Potter examples:
 
 - [meaningful-names](./skills/shared/clean-code/meaningful-names/SKILL.md) — intention-revealing names, boolean prefixes, UPPERCASE constants, no type encoding
 - [functions](./skills/shared/clean-code/functions/SKILL.md) — small, do one thing, few arguments, guard clauses, command-query, DRY
@@ -143,7 +142,7 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 
 **Animations** — plain CSS by default, GSAP when you need a timeline:
 
-- [css-animations](./skills/web/animations/css/SKILL.md) — pure-CSS transitions & keyframes, staggered enter, icon cross-fade, scale-on-press — no motion library
+- [css-animations](./skills/web/animations/css/SKILL.md) — pure-CSS transitions & keyframes, staggered enter, icon cross-fade, scale-on-press
 
 **GSAP (3):**
 
