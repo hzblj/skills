@@ -1,0 +1,26 @@
+{
+  "name": "hzblj",
+  "owner": {
+    "name": "Jan Blazej",
+    "url": "https://www.janblazej.dev"
+  },
+  "description": "Jan Blazej's React / React Native engineering skills, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "hzblj-skills",
+      "source": "./",
+      "description": "Skills for React/React Native Engineers — clean code, strict TypeScript, and native-feeling animations (GSAP, Reanimated, Skia). Straight from my .claude directory.",
+      "category": "engineering",
+      "keywords": [
+        "react",
+        "react-native",
+        "expo",
+        "typescript",
+        "animations",
+        "gsap",
+        "reanimated",
+        "clean-code"
+      ]
+    }
+  ]
+}

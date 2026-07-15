@@ -8,20 +8,40 @@ runtime code.
 ## Layout
 
 ```
-skills/          # All plugin components
-  agents/        # Custom subagents (agent-*.md)
-  commands/      # Slash commands (one .md per command)
+skills/          # Leaf skills, organized by platform/category (see below)
   shared/        # both platforms — clean-code/, ui/, hooks/, project/, type-safety/
   mobile/        # React Native / Expo — animations/, ui/, navigation/, styling/
   web/           # Next.js / React — animations/, navigation/, styling/
-.claude-plugin/  # plugin.json manifest — points agents/commands into skills/
-scripts/         # link-skills.sh, list-skills.sh
+agents/          # Custom subagents (agent-*.md) — plugin-root default location
+commands/        # Slash commands (one .md per command) — plugin-root default location
+.claude-plugin/  # plugin.json (component manifest) + marketplace.json (catalog)
+scripts/         # gen-readmes.mjs, link-skills.sh, list-skills.sh
 .changeset/      # Changesets config (auto changelog)
 ```
 
-Because `agents/` and `commands/` live under `skills/` (not the default plugin
-roots), `.claude-plugin/plugin.json` declares their paths so Claude Code still
-discovers them.
+## Distribution — how the two install channels discover components
+
+This repo ships both as a **[skills.sh](https://skills.sh/hzblj/skills)** source
+(`npx skills add hzblj/skills`) and as a native **Claude Code plugin / marketplace**
+(`/plugin marketplace add hzblj/skills`). Two rules make discovery work for both:
+
+- **Skills are enumerated explicitly** in `plugin.json`'s `skills` array. The skills
+  nest 3–4 levels deep (`skills/mobile/animations/reanimated/core/`), but the default
+  `skills/` scan and skills.sh's catalog scan only look ~1–2 levels down, so a bare
+  scan silently misses most of them. The explicit list is depth-proof, and skills.sh
+  reads it from the manifest. **Every new skill MUST be added to this array** or it
+  won't ship.
+- **Agents and commands use the plugin-root default directories** `agents/` and
+  `commands/`. Custom `agents`/`commands` path arrays in `plugin.json` are silently
+  ignored by the plugin loader (verified on Claude Code 2.1.x), so these live at the
+  repo root and are auto-discovered — no manifest entry, and none needed. Keep them
+  free of stray `.md` files: **every `.md` in `agents/`/`commands/` loads as a
+  component**, so there are no `README.md` index files in those two folders (unlike
+  the `skills/` tree, where per-folder READMEs are harmless).
+
+`.claude-plugin/marketplace.json` is the catalog: one plugin entry (`hzblj-skills`,
+`source: "./"`) pointing at this repo. Marketplace name `hzblj`, plugin name
+`hzblj-skills` — both are public-facing and break existing installs if renamed.
 
 ## Skill authoring conventions
 
@@ -72,18 +92,25 @@ reverse; import only from a package's public entry, never a deep path.
 ## Adding things
 
 - **New skill:** create `skills/<platform>/<category>/<name>/SKILL.md` with
-  frontmatter + the house style above. Keep it a leaf.
-- **New agent:** `skills/agents/agent-<name>.md` with `name`, `description` (with
-  `<example>` blocks), `tools`, `model`. Match the existing agents' shape.
-- **New command:** `skills/commands/<name>.md` with `description` (+ optional
+  frontmatter + the house style above. Keep it a leaf. **Then add its directory path
+  to the `skills` array in [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json)**
+  — otherwise it won't ship via the plugin or skills.sh (see Distribution above).
+- **New agent:** `agents/agent-<name>.md` (repo root) with `name`, `description` (with
+  `<example>` blocks), `tools`, `model`. Match the existing agents' shape. Auto-loaded
+  from `agents/` — no manifest entry. Don't drop a `README.md` in this folder.
+- **New command:** `commands/<name>.md` (repo root) with `description` (+ optional
   `argument-hint`, `allowed-tools`), then the prompt body using `$ARGUMENTS`.
-  Reference skills by **name** so they load when installed as a plugin.
+  Reference skills by **name** so they load when installed as a plugin. Auto-loaded
+  from `commands/` — no manifest entry. Don't drop a `README.md` in this folder.
 
 ## Housekeeping
 
 - Verify cross-links resolve and `name`s stay unique after any restructure.
+- Keep `plugin.json`'s `skills` array in sync with the `skills/` tree, then run
+  `claude plugin validate .` to check both manifests before pushing.
 - After adding, removing, or renaming a skill, run `yarn readmes` to regenerate the
   per-folder `README.md` indexes ([scripts/gen-readmes.mjs](./scripts/gen-readmes.mjs)).
+  It walks `skills/` only, so it never touches `agents/`/`commands/`.
 - Changelog is automated with Changesets: `yarn changeset` to record a change,
   `yarn changeset:version` to apply it. See [.changeset/README.md](.changeset/README.md).
 - `yarn link-skills` symlinks every skill into `~/.claude/skills` for local use.
