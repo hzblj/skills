@@ -143,6 +143,7 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 
 - [component-architecture](./skills/shared/ui/component-architecture/SKILL.md) — component structure, prop typing, responsibility separation
 - [compound-components](./skills/shared/ui/compound-components/SKILL.md) — compound/composer parts sharing context, state/actions/meta, exposed Provider
+- [atomic-design](./skills/shared/ui/atomic-design/SKILL.md) — core-ui as atoms/molecules/organisms/templates; promote feature UI to core-ui on the second use
 - [performance](./skills/shared/ui/performance/SKILL.md) — memoization, stable references, re-render prevention
 - [typography](./skills/shared/ui/typography/SKILL.md) — text wrapping, font smoothing, tabular numbers, Dynamic Type
 - [surfaces](./skills/shared/ui/surfaces/SKILL.md) — concentric radius, optical alignment, shadows/elevation, hit areas

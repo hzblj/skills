@@ -1,7 +1,8 @@
 # UI
 
-`skills/shared/ui` — 7 skills.
+`skills/shared/ui` — 8 skills.
 
+- [**atomic-design**](atomic-design/SKILL.md) — Structure the UI library (core-ui) with Atomic Design — atoms, molecules, organisms, templates — where composition flows one way (higher…
 - [**component-architecture**](component-architecture/SKILL.md) — Defines component structure, prop typing, responsibility separation, and ref handling patterns
 - [**compound-components**](compound-components/SKILL.md) — Build flexible components as a compound/composer set — namespaced parts (Tabs.Item, WizardCard.Provider) that share one context, exposed…
 - [**ui-interactions**](interactions/SKILL.md) — Cross-platform interaction polish — press/tap feedback (scale 0.96), haptics, hover, focus rings, disabled/loading, minimum hit area, no…

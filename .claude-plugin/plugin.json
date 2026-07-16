@@ -30,6 +30,7 @@
     "./skills/shared/clean-code/error-handling",
     "./skills/shared/ui/component-architecture",
     "./skills/shared/ui/compound-components",
+    "./skills/shared/ui/atomic-design",
     "./skills/shared/ui/performance",
     "./skills/shared/ui/typography",
     "./skills/shared/ui/surfaces",
