@@ -6,7 +6,7 @@ description: >-
 
 # Styling (Tailwind CSS)
 
-Tailwind is the primary styling method — compose small utilities on the element, don't reach for inline styles or CSS modules. Two rules carry most of the weight: **style against semantic theme tokens** (never raw colors), so light/dark is a one-place flip; and **express variants with `tv()`**, composing conditional classes with `cn()`. Keep magic values out of the markup — extend the theme instead of `w-[137px]`.
+Tailwind is the primary styling method — compose small utilities on the element, don't reach for inline styles or CSS modules. Two rules carry most of the weight: **style against semantic theme tokens** (never raw colors), so light/dark is a one-place flip; and **express variants with `tv()`**, composing conditional classes with `cn()`. Keep magic values out of the markup — snap to the scale (`p-6`, `w-34`) or a named token instead of an arbitrary `w-[137px]`.
 
 Pairs with [component-architecture](../../../shared/ui/component-architecture/SKILL.md) (variant logic lives in the component), [type-safety](../../../shared/type-safety/SKILL.md) (`VariantProps` types the variants), and [css-animations](../../animations/css/SKILL.md) (motion is CSS/GSAP, not utilities-gone-wild).
 
@@ -145,15 +145,21 @@ className={cn('card border', isActive ? 'border-brand' : 'border-border', classN
 
 The `tailwind-merge` half matters: when two utilities target the same property, the **last wins** (`cn('p-2', 'p-4')` → `p-4`). That's what makes a `className` prop able to *override* a component's defaults instead of producing `p-2 p-4` and a coin-flip. Put the incoming `className` last. (This is the Tailwind-specific home for the string-hygiene rule in [formatting](../../../shared/clean-code/formatting/SKILL.md).)
 
-## No arbitrary values — extend the theme
+## Prefer scale values — avoid the arbitrary `[…]` bracket
 
-Arbitrary values (`w-[137px]`, `text-[#3b82f6]`) hardcode magic numbers into markup and dodge the design system. Add the value to the theme and reference it by name; keep arbitrary values for the genuinely one-off.
+Bracketed arbitrary values (`w-[137px]`, `text-[#3b82f6]`) hardcode magic numbers into markup and step outside the design system — its scale, its rounding, its tokens. Reach for the bracket **last**. Prefer, in order:
+
+1. A **named theme token** — `w-tile`, `text-brand`, `gap-gutter`.
+2. An **on-scale value** — `p-6` (= 24px), `gap-4`, `w-34`. Snap the odd `137px` to the nearest step rather than pinning an off-scale pixel.
+3. An **arbitrary `[…]` value** only for a genuine, unrepeatable one-off.
+
+The number in a spacing utility is a **scale step** (× `0.25rem`), **not pixels** — `w-34` is `8.5rem` ≈ 136px, and `w-137` would be `34.25rem` ≈ 548px. So `w-[137px]` is *not* `w-137`; the closest on-scale width is `w-34`.
 
 ```tsx
-// Bad
-<div className="w-[137px] text-[#7c3aed]" />
-// Good — named theme values
-<div className="w-tile text-brand" />
+// Bad — bracketed, raw px, off the scale
+<div className="w-[137px] p-[24px] text-[#7c3aed]" />
+// Good — on-scale steps and named tokens (p-6 = 24px, w-34 ≈ 136px)
+<div className="w-34 p-6 text-brand" />
 ```
 
 ## Class ordering
@@ -196,7 +202,7 @@ Base styles are mobile; layer `sm:` / `md:` / `lg:` upward from the theme's brea
 | Re-declaring a `type` union for variant props | Derive it with `VariantProps<typeof recipe>` |
 | Template-literal / `+` class strings | `cn()` — flat conditions, no nested ternaries, `className` last |
 | `className` prop that can't override defaults (`p-2 p-4`) | `cn()`/`tv()` uses twMerge — last wins; put incoming `className` last |
-| Arbitrary values (`w-[137px]`, `text-[#…]`) | Add to the theme and reference by name |
+| Bracketed arbitrary values (`w-[137px]`, `text-[#…]`) | Nearest on-scale step (`w-34`, `p-6`) or a named token; `[…]` last |
 | `@apply` to DRY up repeated utilities | Extract a component with `tv()`; keep `@apply` for base/third-party only |
 | Ordering classes by hand | `prettier-plugin-tailwindcss` |
 
@@ -206,5 +212,5 @@ Base styles are mobile; layer `sm:` / `md:` / `lg:` upward from the theme's brea
 - [ ] No `dark:` on routine colors — dark mode flips the token layer in one place; both themes tested.
 - [ ] Components with variants use `tv()`; variant props typed via `VariantProps`.
 - [ ] Conditional/merged classes go through `cn()`; incoming `className` is merged last.
-- [ ] No arbitrary values except genuine one-offs; the rest live in the theme.
+- [ ] No arbitrary `[…]` values except genuine one-offs — snap to on-scale steps (`w-34`, `p-6`) and named tokens.
 - [ ] No `@apply` for component styling; class order left to the Prettier plugin.
