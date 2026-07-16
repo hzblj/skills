@@ -158,7 +158,7 @@ className={cn('spell-card', isActive && 'spell-card--active')}
 className={`spell-card ${isActive ? 'spell-card--active' : ''}`}
 ```
 
-`cn()` reads as a plain list of classes and the conditions that gate them; the template-literal version buries the same logic inside string surgery, and every state you add makes it worse.
+`cn()` reads as a plain list of classes and the conditions that gate them; the template-literal version buries the same logic inside string surgery. That's the formatting rule; for `cn()` with Tailwind — class-conflict merging via twMerge, and variants with `tv()` — see [tailwind](../../../web/styling/tailwind/SKILL.md).
 
 ## Common Mistakes
 
