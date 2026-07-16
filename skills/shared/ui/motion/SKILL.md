@@ -1,12 +1,12 @@
 ---
 name: ui-motion
 description: >-
-  Cross-platform motion polish — interruptible animations, split & stagger enter, subtle exit, contextual icon cross-fade, skip-animation-on-load. Triggers on: stagger, enter animation, exit animation, icon cross-fade, interruptible, initial false.
+  Cross-platform motion polish — interruptible animations, split & stagger enter, subtle exit, contextual icon cross-fade, skip-animation-on-load. Web uses CSS/Tailwind + GSAP (no motion library). Triggers on: stagger, enter animation, exit animation, icon cross-fade, interruptible, GSAP stagger, skip animation on first load.
 ---
 
 # Motion
 
-Enter/exit transitions, staggering, and contextual icon cross-fades — the **principles**, cross-platform. This file gives a Web snippet (CSS/Tailwind/Motion) and a Mobile snippet (Reanimated) for each pattern. For the full mechanics of each engine, defer to the sibling skills: `skills/web/animations/gsap` (timelines, ScrollTrigger, SplitText, stagger) and `skills/mobile/animations/reanimated` (shared values, animated styles, layout animations).
+Enter/exit transitions, staggering, and contextual icon cross-fades — the **principles**, cross-platform. This file gives a Web snippet (CSS / Tailwind / GSAP) and a Mobile snippet (Reanimated) for each pattern. **No motion library** — the web stack here is plain CSS/Tailwind for state transitions and GSAP for sequenced/staggered motion; there is no `framer-motion`/`motion.div`. For the full mechanics of each engine, defer to the sibling skills: `skills/web/animations/gsap` (timelines, ScrollTrigger, SplitText, stagger) and `skills/mobile/animations/reanimated` (shared values, animated styles, layout animations).
 
 One value applies everywhere: **spring `bounce` / bounciness must be `0`.** These interfaces don't overshoot.
 
@@ -63,27 +63,35 @@ Don't animate one big container. Break content into semantic chunks and animate 
 3. For **titles**, consider splitting into words with **~80ms** stagger.
 4. **Combine** `opacity 0→1`, `translateY 12px→0`, and (web) `blur 4px→0`.
 
-### Web — Motion
+### Web — GSAP
 
 ```tsx
-// motion/react — staggered enter
-<motion.div
-  initial="hidden"
-  animate="visible"
-  variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
->
-  {[Title, Description, Actions].map((Child, i) => (
-    <motion.div
-      key={i}
-      variants={{
-        hidden: { opacity: 0, y: 12, filter: 'blur(4px)' },
-        visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
-      }}
-    >
-      <Child />
-    </motion.div>
-  ))}
-</motion.div>
+// GSAP — staggered enter (see skills/web/animations/gsap)
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { useRef } from 'react'
+
+const container = useRef<HTMLDivElement>(null)
+
+useGSAP(
+  () => {
+    gsap.from('.stagger-item', {
+      opacity: 0,
+      y: 12,
+      filter: 'blur(4px)',
+      duration: 0.3,
+      ease: 'power2.out',
+      stagger: 0.1, // ~100ms between children
+    })
+  },
+  { scope: container },
+)
+
+<div ref={container}>
+  <Title className="stagger-item" />
+  <Description className="stagger-item" />
+  <Actions className="stagger-item" />
+</div>
 ```
 
 ### Web — CSS-only stagger
@@ -154,10 +162,19 @@ Exits should be **softer** than enters — the user's focus is moving on. Use a 
 ```
 
 ```tsx
-// Motion
-<motion.div exit={{ opacity: 0, y: -12, filter: 'blur(4px)', transition: { duration: 0.15, ease: 'easeIn' } }}>
-  {content}
-</motion.div>
+// GSAP — subtle exit, then unmount once it finishes (there's no <AnimatePresence>)
+import gsap from 'gsap'
+
+const dismiss = (el: HTMLElement, onDone: () => void) => {
+  gsap.to(el, {
+    opacity: 0,
+    y: -12,
+    filter: 'blur(4px)',
+    duration: 0.15,
+    ease: 'power2.in',
+    onComplete: onDone, // unmount in here so the exit is actually seen
+  })
+}
 ```
 
 ### Mobile — Reanimated
@@ -196,33 +213,9 @@ When an icon appears/disappears or swaps on state change (play→pause, like→l
 - `scale`: `0.25` → `1` (never `0.5`, never `0.6`)
 - `opacity`: `0` → `1`
 - `blur`: `4px` → `0` (web; best-effort/omitted on mobile)
-- spring: `{ type: 'spring', duration: 0.3, bounce: 0 }` — **bounce is always `0`**
+- timing: **~300ms, no overshoot** — web `cubic-bezier(0.2, 0, 0, 1)` (or a GSAP tween); mobile a non-bouncy spring. **Never bounce/overshoot.**
 
-### Web — Motion
-
-```tsx
-import { AnimatePresence, motion } from 'motion/react'
-
-const IconButton = ({ isActive, icon: Icon }) => {
-  return (
-    <button>
-      <AnimatePresence initial={false} mode="popLayout">
-        <motion.span
-          key={isActive ? 'active' : 'inactive'}
-          initial={{ opacity: 0, scale: 0.25, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, scale: 0.25, filter: 'blur(4px)' }}
-          transition={{ type: 'spring', duration: 0.3, bounce: 0 }}
-        >
-          <Icon />
-        </motion.span>
-      </AnimatePresence>
-    </button>
-  )
-}
-```
-
-### Web — CSS cross-fade (no motion dependency)
+### Web — CSS cross-fade
 
 Keep both icons in the DOM, one absolutely positioned over the other, and cross-fade with `cubic-bezier(0.2, 0, 0, 1)` — this gives both enter and exit without any library, since neither icon unmounts.
 
@@ -244,7 +237,7 @@ Keep both icons in the DOM, one absolutely positioned over the other, and cross-
 </div>
 ```
 
-The non-absolute icon defines the layout size; the absolute one overlays it without affecting flow. **Rule:** check `package.json` for `motion`/`framer-motion` — if present use Motion, otherwise use this CSS cross-fade; don't add a dependency just for an icon swap.
+The non-absolute icon defines the layout size; the absolute one overlays it without affecting flow. **Rule:** cross-fade with CSS — both icons stay mounted, so it covers enter *and* exit with no library and never animates on first paint. Reach for GSAP only when the swap must be sequenced with other motion.
 
 ### Mobile — Reanimated
 
@@ -295,7 +288,7 @@ For entering/exiting-based icon swaps and the layout-animation API, see `skills/
 
 Elements already in their default state shouldn't animate in on first render — only on subsequent changes. An enter animation that replays on every mount reads as broken.
 
-- **Web:** `initial={false}` on `AnimatePresence`. Don't apply it to intentional hero/loading entrances — that would skip the whole first-time entrance.
+- **Web:** CSS **transitions** don't fire on first paint — they animate only when a value changes — so a transition-based swap is skip-on-load by construction (another reason to prefer the CSS cross-fade above). For a one-shot **keyframe/GSAP** enter, gate it behind a "mounted" ref so it plays only on later changes — never on an intentional hero/loading entrance.
 - **Mobile:** Guard `entering` behind a "mounted" ref, or omit `entering` for content present at first paint.
 
 ## Use `will-change` Sparingly — Web only
