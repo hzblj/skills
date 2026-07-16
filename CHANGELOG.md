@@ -1,5 +1,11 @@
 # skills
 
+## 1.6.0
+
+### Minor Changes
+
+- [#16](https://github.com/hzblj/skills/pull/16) [`5f9b610`](https://github.com/hzblj/skills/commit/5f9b610675dab1c3f4d13ab613ca6ffd81fc45de) Thanks [@hzblj](https://github.com/hzblj)! - Add an `atomic-design` skill (`shared/ui`) for structuring the `core-ui` library as atoms / molecules / organisms / templates, with composition flowing one way (higher composes lower, never the reverse). Documents which level a component belongs to, the file/folder conventions (kebab-case files, co-located stories, single `index.ts` public API), and — the key policy — **promotion on the second use**: obvious primitives (`Button`, `Input`) go straight into `core-ui/atoms`, but a feature-specific component stays local to its feature until a second place needs it, at which point it's promoted _down_ into `core-ui` and generalized rather than copied or cross-imported. Complements the `project` skill (the package graph) and `component-architecture` (a single component's internals).
+
 ## 1.5.0
 
 ### Minor Changes
