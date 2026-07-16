@@ -147,7 +147,7 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 - [typography](./skills/shared/ui/typography/SKILL.md) — text wrapping, font smoothing, tabular numbers, Dynamic Type
 - [surfaces](./skills/shared/ui/surfaces/SKILL.md) — concentric radius, optical alignment, shadows/elevation, hit areas
 - [motion](./skills/shared/ui/motion/SKILL.md) — interruptible animations, stagger enter, subtle exit, icon cross-fade
-- [interactions](./skills/shared/ui/interactions/SKILL.md) — press feedback (scale 0.96), haptics, hover, focus, hit area
+- [interactions](./skills/shared/ui/interactions/SKILL.md) — press feedback, haptics, hover, focus, hit area
 
 **Foundations:**
 
