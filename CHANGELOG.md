@@ -1,5 +1,11 @@
 # skills
 
+## 1.6.1
+
+### Patch Changes
+
+- [#18](https://github.com/hzblj/skills/pull/18) [`094d476`](https://github.com/hzblj/skills/commit/094d4763d4e1b96bb7301f5d91f99682b5078357) Thanks [@hzblj](https://github.com/hzblj)! - Keep `.claude-plugin/plugin.json`'s `version` in sync with `package.json`. Changesets only bumps `package.json`, so the plugin manifest's version — the one `/plugin` users see — had drifted (stuck at `1.0.0` while the package was `1.6.0`). Add `scripts/sync-plugin-version.mjs`, wire it into `changeset:version` (so every release, local and in CI, updates the manifest automatically), and bump the manifest to the current version. The manifest's `version` is now derived — never hand-edited.
+
 ## 1.6.0
 
 ### Minor Changes
