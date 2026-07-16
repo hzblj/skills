@@ -142,6 +142,7 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 **UI** — components, architecture, and cross-platform design-engineering polish:
 
 - [component-architecture](./skills/shared/ui/component-architecture/SKILL.md) — component structure, prop typing, responsibility separation
+- [compound-components](./skills/shared/ui/compound-components/SKILL.md) — compound/composer parts sharing context, state/actions/meta, exposed Provider
 - [performance](./skills/shared/ui/performance/SKILL.md) — memoization, stable references, re-render prevention
 - [typography](./skills/shared/ui/typography/SKILL.md) — text wrapping, font smoothing, tabular numbers, Dynamic Type
 - [surfaces](./skills/shared/ui/surfaces/SKILL.md) — concentric radius, optical alignment, shadows/elevation, hit areas
@@ -194,12 +195,14 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 
 Custom subagents in [`agents/`](./agents):
 
+- [deep-reasoner](./agents/agent-deep-reasoner.md) — reasoning tier (Fable): architecture, package boundaries, hard type gymnastics, non-obvious bugs
 - [animation-specialist](./agents/agent-animation-specialist.md) — motion across web + mobile (GSAP, Reanimated, Skia, gestures)
 - [clean-code-reviewer](./agents/agent-clean-code-reviewer.md) — read-only review against clean-code + type-safety; Before/After findings
 - [code-refactorer](./agents/agent-code-refactorer.md) — applies the clean-code standards to existing code, preserving behavior
 - [monorepo-architect](./agents/agent-monorepo-architect.md) — scaffolds/enforces the Turborepo monorepo
 - [mobile-developer](./agents/agent-mobile-developer.md) — senior React Native + Expo engineer
 - [web-developer](./agents/agent-web-developer.md) — senior Next.js + React engineer
+- [fast-worker](./agents/agent-fast-worker.md) — execution tier (Haiku): boilerplate, barrels, test skeletons, renames, import rewrites
 
 ## Commands
 
@@ -209,8 +212,10 @@ Slash commands in [`commands/`](./commands):
 - [`/refactor <path>`](./commands/refactor.md) — refactor a file to the standards
 - [`/new-feature <name>`](./commands/new-feature.md) — scaffold a `feature-*` package
 - [`/new-component <Name>`](./commands/new-component.md) — scaffold a component
+- [`/make-composer <path>`](./commands/make-composer.md) — refactor a prop-heavy component into a composer
 - [`/polish <path>`](./commands/polish.md) — interface-polish pass
 - [`/audit-imports`](./commands/audit-imports.md) — audit monorepo boundaries
+- [`/orchestrate <task>`](./commands/orchestrate.md) — plan a task, then delegate across the tiered agents
 
 ## License
 
