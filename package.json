@@ -11,7 +11,8 @@
   "author": "Jan Blazej",
   "scripts": {
     "changeset": "changeset",
-    "changeset:version": "changeset version",
+    "changeset:version": "changeset version && yarn sync-plugin-version",
+    "sync-plugin-version": "node scripts/sync-plugin-version.mjs",
     "list-skills": "bash scripts/list-skills.sh",
     "link-skills": "bash scripts/link-skills.sh",
     "readmes": "node scripts/gen-readmes.mjs",
