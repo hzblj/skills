@@ -20,10 +20,7 @@ A subtle scale-down on press gives a control tactile weight. Always `scale(0.96)
 </button>
 ```
 
-```tsx
-// Motion equivalent
-<motion.button whileTap={{ scale: 0.96 }}>Click me</motion.button>
-```
+The `active:` variant is interruptible for free — releasing mid-press returns smoothly. No motion library needed; this is plain CSS on the compositor.
 
 #### `static` prop pattern
 
@@ -161,23 +158,41 @@ Interactive targets need at least 44×44px (WCAG), 40×40 floor. When the visibl
 
 Elements already in their default state shouldn't animate in on first render — only on subsequent state changes. An icon that fades in every page load looks broken.
 
-### Web — `initial={false}`
+### Web — CSS transitions don't replay; gate keyframes
+
+A CSS **transition** only animates when a value *changes* — it never fires on first paint. So a transition-based swap is skip-on-load for free: keep both states mounted and cross-fade on change (this is the icon cross-fade in [motion](../motion/SKILL.md)).
 
 ```tsx
-// Good — icon animates only on state change, not on mount
-<AnimatePresence initial={false} mode="popLayout">
-  <motion.span
-    key={isActive ? 'active' : 'inactive'}
-    initial={{ opacity: 0, scale: 0.25, filter: 'blur(4px)' }}
-    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-    exit={{ opacity: 0, scale: 0.25, filter: 'blur(4px)' }}
-  >
-    <Icon />
-  </motion.span>
-</AnimatePresence>
+// Good — transition only runs when isActive flips, never on mount
+<span
+  className={cn(
+    'transition-[opacity,scale] duration-300',
+    isActive ? 'scale-100 opacity-100' : 'scale-[0.25] opacity-0',
+  )}
+>
+  <Icon />
+</span>
 ```
 
-Do **not** use `initial={false}` where a component relies on its `initial` to play a first-time entrance (a staggered hero, a loading state) — it would skip the whole entrance. Verify on a full refresh.
+For a one-shot **keyframe or GSAP** enter (which *does* fire on mount), gate it behind a "mounted" ref so it plays only on later changes:
+
+```tsx
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+
+const mounted = useRef(false)
+
+useGSAP(() => {
+  if (!mounted.current) {
+    mounted.current = true
+    return // skip the first render — the element is already in place
+  }
+  gsap.from(el.current, { opacity: 0, scale: 0.25, duration: 0.3, ease: 'power2.out' })
+}, { dependencies: [isActive] })
+```
+
+Do **not** gate an intentional first-time entrance (a staggered hero, a loading state) — that's exactly when the enter should play. Verify on a full refresh.
 
 ### Mobile — mounted guard
 
