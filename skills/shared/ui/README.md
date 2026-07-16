@@ -1,8 +1,9 @@
 # UI
 
-`skills/shared/ui` — 6 skills.
+`skills/shared/ui` — 7 skills.
 
 - [**component-architecture**](component-architecture/SKILL.md) — Defines component structure, prop typing, responsibility separation, and ref handling patterns
+- [**compound-components**](compound-components/SKILL.md) — Build flexible components as a compound/composer set — namespaced parts (Tabs.Item, WizardCard.Provider) that share one context, exposed…
 - [**ui-interactions**](interactions/SKILL.md) — Cross-platform interaction polish — press/tap feedback (scale 0.96), haptics, hover, focus rings, disabled/loading, minimum hit area, no…
 - [**ui-motion**](motion/SKILL.md) — Cross-platform motion polish — interruptible animations, split & stagger enter, subtle exit, contextual icon cross-fade, skip-animation-o…
 - [**performance**](performance/SKILL.md) — Enforces rendering performance best practices — memoization, stable references, and avoiding unnecessary re-renders
