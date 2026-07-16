@@ -1,5 +1,19 @@
 # skills
 
+## 1.5.0
+
+### Minor Changes
+
+- [#12](https://github.com/hzblj/skills/pull/12) [`698d3ee`](https://github.com/hzblj/skills/commit/698d3ee7366c2c6e77128cec8bbed3e78ec3449d) Thanks [@hzblj](https://github.com/hzblj)! - Drop all `framer-motion` / `motion/react` usage from the UI skills — the web animation stack is CSS/Tailwind (state transitions) and GSAP (sequenced/staggered/exit motion), with Reanimated on mobile. In `ui-motion`, the staggered-enter and exit examples are now GSAP, the icon cross-fade is the CSS-only version (no `<motion.span>`/`<AnimatePresence>`), and the icon timing spec is stated platform-neutrally. In `ui-interactions`, press feedback drops the `<motion.button whileTap>` equivalent (Tailwind `active:scale-[0.96]` is the web way), and skip-animation-on-first-load is reframed around CSS transitions not replaying plus gating one-shot GSAP enters behind a mounted ref.
+
+- [#15](https://github.com/hzblj/skills/pull/15) [`7c5373a`](https://github.com/hzblj/skills/commit/7c5373a97cbf94a91b0242c165bb256c1d3e7e34) Thanks [@hzblj](https://github.com/hzblj)! - Rework the `tailwind` skill into the house style and make it the authoritative home for `cn()`. New guidance: style against **semantic theme tokens** (`bg-surface`, `text-foreground`) defined as CSS variables and flipped once for dark mode, instead of scattering `bg-white … dark:bg-neutral-900` pairs across every element; express component variants with **`tv()`** (tailwind-variants) — `base`/`variants`/`defaultVariants`/`compoundVariants`, typed via `VariantProps` — rather than hand-rolled `cn()` chains; and a full `cn()` section covering twMerge conflict resolution (last-wins, so `className` props can override). Plus no-arbitrary-values, `size-*`, `group`/`peer`, `data-*` variants, avoiding `@apply`, and letting `prettier-plugin-tailwindcss` order classes. A Common Mistakes table and Review Checklist round it out.
+
+  The `formatting` skill's `cn()` section is trimmed to the string-hygiene rule and now cross-links `tailwind` for the Tailwind-specific depth (twMerge, `tv()`).
+
+### Patch Changes
+
+- [#13](https://github.com/hzblj/skills/pull/13) [`9f37ee7`](https://github.com/hzblj/skills/commit/9f37ee715698738ac46402384370c9721861b6a8) Thanks [@hzblj](https://github.com/hzblj)! - Make the README's `interactions` catalog line general — drop the specific "(scale 0.96)" value from the one-line index (the exact value stays in the skill itself).
+
 ## 1.4.1
 
 ### Patch Changes
