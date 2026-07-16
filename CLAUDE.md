@@ -122,4 +122,8 @@ reverse; import only from a package's public entry, never a deep path.
   `agents/` subfolder is unrelated to the repo-root `agents/` (Claude subagents).
 - Changelog is automated with Changesets: `yarn changeset` to record a change,
   `yarn changeset:version` to apply it. See [.changeset/README.md](.changeset/README.md).
+  Changesets only bumps `package.json`, so `changeset:version` also runs
+  [`scripts/sync-plugin-version.mjs`](./scripts/sync-plugin-version.mjs) to copy the
+  new version into `.claude-plugin/plugin.json` (the version `/plugin` users see).
+  **Never hand-edit the manifest's `version`** — it's derived from `package.json`.
 - `yarn link-skills` symlinks every skill into `~/.claude/skills` for local use.
