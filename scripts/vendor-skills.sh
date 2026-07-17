@@ -23,10 +23,17 @@ set -euo pipefail
 #   bash scripts/vendor-skills.sh                    # -> ./.claude/skills (cwd)
 #   bash scripts/vendor-skills.sh <path-to-project>  # -> <project>/.claude/skills
 #   bash scripts/vendor-skills.sh <path-to-project> <dest-subdir>
+#   bash scripts/vendor-skills.sh --only web         # only web skills
+#   bash scripts/vendor-skills.sh --only mobile,shared
 #
 # The target project defaults to the CURRENT directory, so the common flow is to
 # cd into the consumer project and run the script — it always writes to
 # ./.claude/skills there. Pass an explicit path only to target another project.
+#
+# --only <platform[,platform...]> vendors just the chosen top-level platforms
+# (shared | mobile | web); omit it to vendor everything. A filtered run only
+# prunes stale folders of the SAME platforms, so vendoring web then mobile
+# leaves the web skills in place.
 #
 # Re-running refreshes previously vendored skills and prunes ones that were
 # renamed or removed in this repo. Only folders this script created (marked with
@@ -37,6 +44,22 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 ROOT="$REPO/skills"
 MARKER=".vendored-from-hzblj-skills"
 
+# Separate flags from positional args so --only can appear anywhere.
+PLATFORMS=""
+positional=()
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --only) PLATFORMS="${2:-}"; shift 2 ;;
+    --only=*) PLATFORMS="${1#--only=}"; shift ;;
+    -h|--help)
+      sed -n '4,40p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+    *) positional+=("$1"); shift ;;
+  esac
+done
+if [ "${#positional[@]}" -gt 0 ]; then set -- "${positional[@]}"; else set --; fi
+
 PROJECT="${1:-.}"
 SUBDIR="${2:-.claude/skills}"
 
@@ -44,6 +67,24 @@ if [ ! -d "$PROJECT" ]; then
   echo "error: project directory not found: $PROJECT" >&2
   exit 1
 fi
+
+# Resolve which top-level platform dirs to walk. Empty selected[] means "all".
+selected=()
+roots=()
+if [ -n "$PLATFORMS" ]; then
+  IFS=',' read -ra requested <<< "$PLATFORMS"
+  for p in "${requested[@]}"; do
+    p="${p//[[:space:]]/}"
+    [ -n "$p" ] || continue
+    if [ ! -d "$ROOT/$p" ]; then
+      echo "error: unknown platform '$p' (expected: shared, mobile, web)" >&2
+      exit 1
+    fi
+    selected+=("$p")
+    roots+=("$ROOT/$p")
+  done
+fi
+if [ "${#roots[@]}" -eq 0 ]; then roots=("$ROOT"); fi
 
 DEST="$(cd "$PROJECT" && pwd)/$SUBDIR"
 
@@ -64,18 +105,29 @@ while IFS= read -r -d '' skill_md; do
   name="${rel//\//-}"         # mobile-animations-reanimated-core
   names+=("$name")
   srcs+=("$src")
-done < <(find "$ROOT" -name SKILL.md \
+done < <(find "${roots[@]}" -name SKILL.md \
   -not -path '*/node_modules/*' -not -path '*/deprecated/*' -print0)
 
 mkdir -p "$DEST"
 
 # Prune stale vendored skills (renamed/removed upstream) so re-runs stay clean.
 # Only prune folders WE created — detected by the marker file — never the
-# project's own skills.
+# project's own skills. When filtering by platform, scope the prune to the same
+# platforms so a web-only run leaves vendored mobile-*/shared-* folders alone.
 for entry in "$DEST"/*; do
   [ -d "$entry" ] || continue
   [ -f "$entry/$MARKER" ] || continue
   base="$(basename "$entry")"
+
+  if [ "${#selected[@]}" -gt 0 ]; then
+    segment="${base%%-*}"
+    in_scope=false
+    for p in "${selected[@]}"; do
+      [ "$p" = "$segment" ] && { in_scope=true; break; }
+    done
+    "$in_scope" || continue
+  fi
+
   keep=false
   for name in "${names[@]}"; do
     [ "$name" = "$base" ] && { keep=true; break; }
