@@ -15,6 +15,7 @@
     "sync-plugin-version": "node scripts/sync-plugin-version.mjs",
     "list-skills": "bash scripts/list-skills.sh",
     "link-skills": "bash scripts/link-skills.sh",
+    "vendor-skills": "bash scripts/vendor-skills.sh",
     "readmes": "node scripts/gen-readmes.mjs",
     "openai-yaml": "node scripts/gen-openai-yaml.mjs"
   },
