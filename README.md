@@ -27,7 +27,7 @@ for the hundredth time is how skills die. Make them your own.
 
 ## Install
 
-Two ways to install, two philosophies.
+Three ways in, depending on whether you want to fork, subscribe, or vendor.
 
 ### Quickstart — [skills.sh](https://skills.sh/hzblj/skills)
 
@@ -61,8 +61,31 @@ claude plugin marketplace add hzblj/skills
 claude plugin install hzblj-skills@hzblj
 ```
 
+### Vendor into a project — commit the skills to your repo
+
+Want the skills **checked into a project** so your whole team gets them over git, with
+no per-machine install? Clone this repo and run the vendor script — it copies every
+skill into the project's `.claude/skills/`, flattened to a single level so Claude
+Code's project-skill scan (which only looks a level or two deep) actually finds them:
+
+```bash
+# from inside your project — writes to ./.claude/skills
+bash /path/to/skills/scripts/vendor-skills.sh
+
+# or from a clone of this repo, targeting a project
+yarn vendor-skills /path/to/your/project
+```
+
+Destination folders are domain-prefixed (`mobile-animations-reanimated-core`) so leaf
+names never collide, and each skill's cross-links are rewritten to the flattened
+sibling paths. Re-running refreshes and prunes cleanly, touching only the folders it
+created. Scope it with `--only web`, `--only mobile,shared`, etc. — `shared` is a
+common dependency of the platform skills, so include it unless you know you don't
+need it.
+
 - **[skills.sh](https://skills.sh/hzblj/skills)** copies the skills in so you can edit them — skills only.
 - **The plugin** keeps them as a managed bundle you don't edit, and ships the agents and commands alongside the skills.
+- **`vendor-skills`** commits them into a project's `.claude/skills/` — team-wide over git, no install step for teammates.
 
 ## How I use them
 
