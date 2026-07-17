@@ -19,8 +19,14 @@ set -euo pipefail
 # Claude uses; the folder name is just for human browsing.
 #
 # Usage:
-#   bash scripts/vendor-skills.sh <path-to-project>
-#   bash scripts/vendor-skills.sh <path-to-project> <dest-subdir>   # default: .claude/skills
+#   cd <your-project> && bash /path/to/skills/scripts/vendor-skills.sh
+#   bash scripts/vendor-skills.sh                    # -> ./.claude/skills (cwd)
+#   bash scripts/vendor-skills.sh <path-to-project>  # -> <project>/.claude/skills
+#   bash scripts/vendor-skills.sh <path-to-project> <dest-subdir>
+#
+# The target project defaults to the CURRENT directory, so the common flow is to
+# cd into the consumer project and run the script — it always writes to
+# ./.claude/skills there. Pass an explicit path only to target another project.
 #
 # Re-running refreshes previously vendored skills and prunes ones that were
 # renamed or removed in this repo. Only folders this script created (marked with
@@ -31,13 +37,7 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 ROOT="$REPO/skills"
 MARKER=".vendored-from-hzblj-skills"
 
-if [ "$#" -lt 1 ]; then
-  echo "usage: bash scripts/vendor-skills.sh <path-to-project> [dest-subdir]" >&2
-  echo "       dest-subdir defaults to .claude/skills" >&2
-  exit 1
-fi
-
-PROJECT="$1"
+PROJECT="${1:-.}"
 SUBDIR="${2:-.claude/skills}"
 
 if [ ! -d "$PROJECT" ]; then
