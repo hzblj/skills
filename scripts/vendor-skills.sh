@@ -18,6 +18,13 @@ set -euo pipefail
 # SKILL.md `name:` frontmatter is left untouched — that is the real identifier
 # Claude uses; the folder name is just for human browsing.
 #
+# Cross-links: skills reference siblings with the repo's nested relative paths
+# (../gestures/SKILL.md, ../../type-safety/SKILL.md). Flattening breaks those, so
+# each copied SKILL.md has its links rewritten to the flattened sibling names
+# (../mobile-animations-reanimated-gestures/SKILL.md). The repo source is never
+# touched — its nested links stay correct for the plugin/skills.sh channel, where
+# the nested tree is preserved.
+#
 # Usage:
 #   cd <your-project> && bash /path/to/skills/scripts/vendor-skills.sh
 #   bash scripts/vendor-skills.sh                    # -> ./.claude/skills (cwd)
@@ -43,6 +50,49 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 ROOT="$REPO/skills"
 MARKER=".vendored-from-hzblj-skills"
+
+# Rewrite a vendored SKILL.md's cross-links from the repo's nested layout
+# (../sibling/SKILL.md) to the flattened sibling folder names. Each link is
+# resolved against the ORIGINAL source dir, so arbitrary ../ depth and cross-
+# platform links map correctly; #anchors are preserved (the token match stops
+# before '#', so the anchor rides along untouched). Pure bash — no perl/sed
+# dependency, and safe on bash 3.2. Never edits repo sources, only the copy.
+links_rewritten=0
+rewrite_links() {
+  local src_dir="$1" file="$2"
+  local tokens token linkdir resolved rel flat new content changed=0
+
+  tokens="$(grep -oE '\]\(\.\.[^)#]*SKILL\.md' "$file" 2>/dev/null | sed 's/^](//' | sort -u || true)"
+  [ -n "$tokens" ] || return 0
+
+  # Read once, preserving trailing newlines (the printf x / %x guard), replace in
+  # memory, write once. Tokens contain no glob metachars (* ? [), so ${//} is a
+  # literal replacement; the leading ../ makes each token an unambiguous match.
+  content="$(cat "$file"; printf x)"; content="${content%x}"
+
+  while IFS= read -r token; do
+    [ -n "$token" ] || continue
+    linkdir="$(dirname "$token")"
+    resolved="$(cd "$src_dir/$linkdir" 2>/dev/null && pwd || true)"
+    case "$resolved" in
+      "$ROOT"/*) ;;
+      *) echo "warn: unresolved link '$token' in ${src_dir#"$REPO"/}/SKILL.md" >&2; continue ;;
+    esac
+    rel="${resolved#"$ROOT"/}"
+    flat="${rel//\//-}"
+    new="../$flat/SKILL.md"
+    [ "$new" = "$token" ] && continue
+    # Unquoted on purpose: inside ${//} there is no word-splitting, and bash 3.2
+    # inserts LITERAL quotes if $token/$new are double-quoted here. Tokens carry
+    # no glob metachars (* ? [), so the match stays literal.
+    content="${content//$token/$new}"
+    changed=$((changed + 1))
+    links_rewritten=$((links_rewritten + 1))
+  done <<< "$tokens"
+
+  [ "$changed" -gt 0 ] && printf '%s' "$content" > "$file"
+  return 0
+}
 
 # Separate flags from positional args so --only can appear anywhere.
 PLATFORMS=""
@@ -151,7 +201,8 @@ for i in "${!names[@]}"; do
   mkdir -p "$target"
   cp -R "$src/." "$target/"
   printf '%s\n' "${src#"$REPO"/}" > "$target/$MARKER"
+  rewrite_links "$src" "$target/SKILL.md"
   echo "vendored $name -> $target"
 done
 
-echo "done: ${#names[@]} skills vendored into $DEST"
+echo "done: ${#names[@]} skills vendored into $DEST ($links_rewritten cross-links rewritten)"
