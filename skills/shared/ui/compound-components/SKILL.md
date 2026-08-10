@@ -314,8 +314,8 @@ every composer:
 
 | Bucket | Holds | Examples |
 | --- | --- | --- |
-| `state` | the reactive data the parts render | the `wizard`, `isReady`, loaded flags |
-| `actions` | callbacks (grouped where they belong together) | `update`, `reveal: { isRevealed, show, hide }` |
+| `state` | the reactive data the parts render | the `wizard`, `isRevealed`, loaded flags |
+| `actions` | callbacks (grouped where they belong together) | `update`, `reveal: { show, hide }` |
 | `meta` | **non-reactive** shared handles — refs, animated refs, shared values, static config | `portraitRef`, a Reanimated `SharedValue`, layout offsets |
 
 `meta` is the home for **refs** and anything a part needs to reach but that must
@@ -328,13 +328,13 @@ re-rendering the whole subtree.
 import { createContext, useContext, type RefObject } from 'react'
 
 type WizardCardState = {
+  isRevealed: boolean
   wizard: Wizard
 }
 
 type WizardCardActions = {
   reveal: {
     hide: () => void
-    isRevealed: boolean
     show: () => void
   }
   update?: (patch: Partial<Wizard>) => void
@@ -380,7 +380,7 @@ export const WizardCardPortrait: FC = () => {
 
   return (
     <div ref={meta.portraitRef} onClick={actions.reveal.show}>
-      {actions.reveal.isRevealed ? (
+      {state.isRevealed ? (
         <Portrait wizard={state.wizard} />
       ) : (
         <CardBack />
@@ -407,7 +407,7 @@ import { WizardCardContext, type WizardCardActions, type WizardCardContextValue,
 type WizardCardProviderProps = {
   actions?: Pick<WizardCardActions, 'update'> // suppliable from above; the rest is internal
   children: ReactNode
-  state: WizardCardState
+  state: Pick<WizardCardState, 'wizard'> // suppliable from above; internal UI state is merged in
 }
 
 const WizardCardProvider: FC<WizardCardProviderProps> = ({ actions, children, state }) => {
@@ -420,11 +420,11 @@ const WizardCardProvider: FC<WizardCardProviderProps> = ({ actions, children, st
   const value = useMemo<WizardCardContextValue>(
     () => ({
       actions: {
-        reveal: { hide, isRevealed, show },
+        reveal: { hide, show },
         update: actions?.update,
       },
       meta: { portraitRef },
-      state,
+      state: { ...state, isRevealed },
     }),
     [actions, hide, isRevealed, show, state],
   )
