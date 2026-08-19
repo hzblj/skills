@@ -1,5 +1,11 @@
 # skills
 
+## 1.7.1
+
+### Patch Changes
+
+- [#24](https://github.com/hzblj/skills/pull/24) [`1aa7d5f`](https://github.com/hzblj/skills/commit/1aa7d5f67813e5578c4f7a1082c063c1f03a853e) Thanks [@hzblj](https://github.com/hzblj)! - `vendor-skills.sh` now rewrites cross-links in every markdown file of a vendored skill, not just its `SKILL.md`. A link from `references/patterns.md` to a sibling skill was left pointing at the repo's nested layout and dangled in the flattened destination. Files in a skill's subfolder also get one extra `../` so the rewritten path resolves from their own depth.
+
 ## 1.7.0
 
 ### Minor Changes
