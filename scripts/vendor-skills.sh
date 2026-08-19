@@ -59,8 +59,15 @@ MARKER=".vendored-from-hzblj-skills"
 # dependency, and safe on bash 3.2. Never edits repo sources, only the copy.
 links_rewritten=0
 rewrite_links() {
-  local src_dir="$1" file="$2"
-  local tokens token linkdir resolved rel flat new content changed=0
+  local src_dir="$1" file="$2" subdir="${3:-.}"
+  local tokens token linkdir resolved rel flat new content changed=0 up=".." depth
+
+  # A file in a skill's own subfolder (references/) sits one level deeper in the
+  # flattened tree, so it needs one more ../ to reach a sibling skill.
+  if [ "$subdir" != "." ]; then
+    depth="$(printf '%s' "$subdir" | tr -cd '/' | wc -c)"
+    for _ in $(seq 0 "$depth"); do up="../$up"; done
+  fi
 
   tokens="$(grep -oE '\]\(\.\.[^)#]*SKILL\.md' "$file" 2>/dev/null | sed 's/^](//' | sort -u || true)"
   [ -n "$tokens" ] || return 0
@@ -73,14 +80,14 @@ rewrite_links() {
   while IFS= read -r token; do
     [ -n "$token" ] || continue
     linkdir="$(dirname "$token")"
-    resolved="$(cd "$src_dir/$linkdir" 2>/dev/null && pwd || true)"
+    resolved="$(cd "$src_dir/$subdir/$linkdir" 2>/dev/null && pwd || true)"
     case "$resolved" in
       "$ROOT"/*) ;;
-      *) echo "warn: unresolved link '$token' in ${src_dir#"$REPO"/}/SKILL.md" >&2; continue ;;
+      *) echo "warn: unresolved link '$token' in ${src_dir#"$REPO"/}/$subdir" >&2; continue ;;
     esac
     rel="${resolved#"$ROOT"/}"
     flat="${rel//\//-}"
-    new="../$flat/SKILL.md"
+    new="$up/$flat/SKILL.md"
     [ "$new" = "$token" ] && continue
     # Unquoted on purpose: inside ${//} there is no word-splitting, and bash 3.2
     # inserts LITERAL quotes if $token/$new are double-quoted here. Tokens carry
@@ -201,7 +208,10 @@ for i in "${!names[@]}"; do
   mkdir -p "$target"
   cp -R "$src/." "$target/"
   printf '%s\n' "${src#"$REPO"/}" > "$target/$MARKER"
-  rewrite_links "$src" "$target/SKILL.md"
+  while IFS= read -r -d '' md; do
+    rel_md="${md#"$target"/}"
+    rewrite_links "$src" "$md" "$(dirname "$rel_md")"
+  done < <(find "$target" -name '*.md' -print0)
   echo "vendored $name -> $target"
 done
 
