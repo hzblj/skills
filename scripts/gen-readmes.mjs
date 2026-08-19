@@ -55,6 +55,13 @@ const readFrontmatter = (file) => {
     } else {
       description = first;
     }
+    // A quoted YAML scalar (description: "...") keeps its quotes through the regex.
+    const quoted = description.match(/^(["'])([\s\S]*)\1$/);
+    if (quoted) {
+      description = quoted[2];
+      // Double-quoted YAML also carries backslash escapes (\" inside the string).
+      if (quoted[1] === '"') description = description.replace(/\\(["\\])/g, "$1");
+    }
   }
   return { name: nameM ? nameM[1].trim() : "", description };
 };
