@@ -64,6 +64,21 @@ This repo ships both as a **[skills.sh](https://skills.sh/hzblj/skills)** source
 - **Examples use the Harry Potter theme** (wizards, houses, spells, potions,
   Quidditch, Hogwarts) — matching the rest of the repo. No `foo`/`bar`.
 - **Cross-link** sibling skills with relative links: `[name](../sibling/SKILL.md)`.
+- **`references/` for bulk.** A skill whose examples would bury its rules keeps
+  `SKILL.md` thin (frontmatter, intro, a rule table, a Review Checklist) and moves the
+  worked `// Good` / `// Bad` examples into `references/*.md` alongside it, linked from
+  the table. `type-safety` and `why` follow this shape. The generators stop at a
+  skill's own folder, so `references/` is never walked; `vendor-skills.sh` copies it
+  wholesale. Links *inside* a skill folder aren't rewritten when vendoring, so keep
+  them relative to the skill (`./references/patterns.md`), never `../`.
+- **Attribution.** A skill adapted from someone else's work carries an italic
+  `*Adapted from [repo](url) (LICENSE).*` line at the bottom of its `SKILL.md` (and each
+  of its `references/` files), plus a row in the README's **Credits** table saying what
+  changed. Currently `how`, `teach`, `unslop`, `why`, and part of `type-safety` come
+  from [cursor/plugins](https://github.com/cursor/plugins) `pstack` (MIT). `teach` is a
+  verbatim copy, so its body stays byte-identical to upstream and only the attribution
+  line is appended; `how` is verbatim apart from its subagent config, which is
+  retargeted to Claude Code's agent types and model ids.
 
 ## Code standard (enforced by the `clean-code` skills)
 

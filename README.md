@@ -176,8 +176,13 @@ folders; there are no umbrella files, so you can enable exactly what you want.
 **Foundations:**
 
 - [hooks](./skills/shared/hooks/SKILL.md) — custom hooks: naming, logic extraction, view/logic separation
-- [type-safety](./skills/shared/type-safety/SKILL.md) — strict TypeScript: `type` over `interface`, no `any`, no `enum`, narrow types
+- [type-safety](./skills/shared/type-safety/SKILL.md) — strict TypeScript: 22 rules (no `any`, no `as`, discriminated unions, constructive modeling, branded types, boundary validation) + [worked examples](./skills/shared/type-safety/references/patterns.md)
 - [project](./skills/shared/project/SKILL.md) — Turborepo monorepo: `core-*`/`feature-*` packages, `platform-*` apps, dependency direction
+- [orchestration](./skills/shared/orchestration/SKILL.md) — tiered multi-agent delegation: which agent gets what, context isolation, cost model
+- [why](./skills/shared/why/SKILL.md) — code archaeology: fan out across git/tickets/docs/chat, return a cited, confidence-calibrated read
+- [how](./skills/shared/how/SKILL.md) — architectural walkthroughs: parallel explorers map a subsystem, then an explainer builds the mental model
+- [teach](./skills/shared/teach/SKILL.md) — explain a change or subsystem so it actually lands: plain account, diagrams built up one part at a time
+- [unslop](./skills/shared/unslop/SKILL.md) — strip AI tells from prose: no em dashes, no puffery, plain speech, real voice
 
 ### Mobile — React Native / Expo
 
@@ -240,6 +245,22 @@ Slash commands in [`commands/`](./commands):
 - [`/polish <path>`](./commands/polish.md) — interface-polish pass
 - [`/audit-imports`](./commands/audit-imports.md) — audit monorepo boundaries
 - [`/orchestrate <task>`](./commands/orchestrate.md) — plan a task, then delegate across the tiered agents
+
+## Credits
+
+Most of this repo is my own `.claude` directory. Five skills come from
+**[cursor/plugins](https://github.com/cursor/plugins) `pstack`** (MIT), because they were
+already better than anything I'd have written:
+
+| Skill here | Upstream | What I changed |
+| --- | --- | --- |
+| [unslop](./skills/shared/unslop/SKILL.md) | [`pstack/skills/unslop`](https://github.com/cursor/plugins/tree/main/pstack/skills/unslop) | Their pattern list, reorganized into this repo's tables, plus a common-mistakes section and a review checklist |
+| [why](./skills/shared/why/SKILL.md) | [`pstack/skills/why`](https://github.com/cursor/plugins/tree/main/pstack/skills/why) | Rewritten for Claude Code — the `Agent` tool and the [orchestration](./skills/shared/orchestration/SKILL.md) tiers instead of Cursor's subagents; the eight per-source playbooks folded into one roster table |
+| [how](./skills/shared/how/SKILL.md) | [`pstack/skills/how`](https://github.com/cursor/plugins/tree/main/pstack/skills/how) | Only the subagent config, retargeted from Cursor's agent types and model ids to Claude Code's (`Explore` for the read-only explorers, `deep-reasoner` for the explainer, a fable/opus/sonnet critic panel). The four `references/` prompts are verbatim |
+| [teach](./skills/shared/teach/SKILL.md) | [`pstack/skills/teach`](https://github.com/cursor/plugins/tree/main/pstack/skills/teach) | Nothing. Taken verbatim |
+| [type-safety](./skills/shared/type-safety/SKILL.md) | [`pstack/skills/typescript-best-practices`](https://github.com/cursor/plugins/tree/main/pstack/skills/typescript-best-practices) | Merged into my existing skill: their rule-table layout, plus constructive modeling, simplest total type, the narrowing hierarchy, boundary validation, schema-derived types, and object args. Examples rewritten in TypeScript house style with the Harry Potter theme |
+
+Each of those files carries the same attribution at the bottom. Everything else is mine.
 
 ## License
 
