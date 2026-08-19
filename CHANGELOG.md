@@ -1,5 +1,29 @@
 # skills
 
+## 1.7.0
+
+### Minor Changes
+
+- [#22](https://github.com/hzblj/skills/pull/22) [`1b45c4f`](https://github.com/hzblj/skills/commit/1b45c4fcbf63eb31bcf33bbcbfa5241c10265cac) Thanks [@hzblj](https://github.com/hzblj)! - Add the `how` skill (`skills/shared/how`), taken verbatim from [cursor/plugins](https://github.com/cursor/plugins/tree/main/pstack/skills/how) (MIT), together with its four `references/` prompt templates. It answers "how does X work": parallel explorers map a subsystem, an explainer turns that into an onboarding-level mental model, and an optional critique mode spawns independent architectural critics. It is the companion `teach` calls alongside `why`.
+
+  The subagent config is retargeted from Cursor's agent types and model ids to Claude Code's: explorers run as the built-in read-only `Explore` agent, the explainer and synthesizer run as `deep-reasoner` on Fable, and the critique panel is `fable` / `opus` / `sonnet` on `general-purpose`. Cursor's `readonly` flag has no Claude Code equivalent, so the read-only posture is stated in the prompt instead. Everything else, including the four `references/` prompts, is verbatim.
+
+  `scripts/gen-openai-yaml.mjs` and `scripts/gen-readmes.mjs` now unescape backslash escapes inside a double-quoted YAML `description:` scalar.
+
+- [#22](https://github.com/hzblj/skills/pull/22) [`1b45c4f`](https://github.com/hzblj/skills/commit/1b45c4fcbf63eb31bcf33bbcbfa5241c10265cac) Thanks [@hzblj](https://github.com/hzblj)! - Add the `teach` skill (`skills/shared/teach`), taken verbatim from [cursor/plugins](https://github.com/cursor/plugins/tree/main/pstack/skills/teach) (MIT). It explains a change or subsystem so it actually lands: pick the few things the reader should walk away with, let `why` do the digging, start with a plain definition, and build diagrams up one part at a time instead of dropping one crowded picture at the end. It is user-invoked only (`disable-model-invocation: true`).
+
+  `scripts/gen-openai-yaml.mjs` and `scripts/gen-readmes.mjs` now strip the quotes from a quoted YAML `description:` scalar, and the OpenAI config honours `disable-model-invocation` by emitting `allow_implicit_invocation: false`.
+
+- [#22](https://github.com/hzblj/skills/pull/22) [`1b45c4f`](https://github.com/hzblj/skills/commit/1b45c4fcbf63eb31bcf33bbcbfa5241c10265cac) Thanks [@hzblj](https://github.com/hzblj)! - Add the `unslop` skill (`skills/shared/unslop`): a writing pass that strips AI tells from prose and puts a human voice back in. Covers puffery, AI vocabulary, em dashes and connector colons, inline-header lists, chatbot artifacts, filler, abstract-metaphor jargon, and plain-speech rules (active voice, no adverb crutches, say what it does instead of how it feels), plus a common-mistakes table for over-correcting and a review checklist. Applies to READMEs, docs, commit messages, PR descriptions, and changelog entries.
+
+- [#22](https://github.com/hzblj/skills/pull/22) [`1b45c4f`](https://github.com/hzblj/skills/commit/1b45c4fcbf63eb31bcf33bbcbfa5241c10265cac) Thanks [@hzblj](https://github.com/hzblj)! - Restructure `type-safety` and add the `why` skill, both adapted from [cursor/plugins](https://github.com/cursor/plugins) `pstack` (MIT).
+
+  `type-safety` splits into a thin `SKILL.md` (22-row rule table + review checklist) and `references/patterns.md` holding every worked `// Good` / `// Bad` example, so the loaded context stays small and the examples stay complete. Seven rules are new: constructive modeling (`[T, ...T[]]`, pairs, start + duration instead of runtime guards), simplest total type, the narrowing hierarchy, type guards that must verify their own claim, boundary validation, schema-derived types (`z.infer`, `Pick<Generated, …>`), object args over positional, plus real-tests-over-mocks and structured telemetry.
+
+  `why` (`skills/shared/why`) is a code-archaeology skill: it anchors the question in `git blame` / `gh pr view`, enumerates the session's MCP servers, maps them to seven evidence categories (source control, tickets, docs, chat, observability, error tracking, analytics warehouse), fans out one investigator per category in parallel, and synthesizes a confidence-calibrated, fully cited answer with the gaps named. Ships with `references/epistemics.md`, `references/investigator-prompt.md`, and `references/synthesizer-prompt.md`.
+
+  Adds a **Credits** section to the README and an attribution convention to CLAUDE.md.
+
 ## 1.6.2
 
 ### Patch Changes
