@@ -262,6 +262,10 @@ already better than anything I'd have written:
 
 Each of those files carries the same attribution at the bottom. Everything else is mine.
 
+## More libraries
+
+The other libraries from the same author are at **[libraries.janblazej.dev](https://www.libraries.janblazej.dev)**.
+
 ## License
 
 [MIT](./LICENSE) © Jan Blazej
